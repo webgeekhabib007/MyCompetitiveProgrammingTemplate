@@ -65,50 +65,34 @@ typedef unsigned long long int ull;
 
 
 
-
 void solve(ll cases=0){
-    ll n;cin>>n;
-    string s;cin>>s;
-    vector<ll> v;
-    string t = s,h;
-    sort(all(s));
+    ll n;
+    cin>>n;
+    vector<vector<ll>> tree(n + 1);
 
-    if(s == t){
-        cout << "0" << nl;
-        return;
+    for (ll i = 0; i < n - 1; ++i) {
+        int u, v;
+        cin >> u >> v;
+        tree[u].push_back(v);
+        tree[v].push_back(u);
     }
 
+    // for (ll i = 1; i <= n; ++i) {
+    //     cout << i << " -> ";
+    //     for (int neighbor : tree[i]) {
+    //         cout << neighbor << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    // Finding vertices with only one neighbor
     ll cnt=0;
-    char c = s[0];
-    stack<pair<char,ll>> st;
-
-    st.push(make_pair(c,0));
-
-    for(ll i=1;i<n-1;i++){
-        while(!st.empty() and st.top().first < s[i]){
-            st.pop();
-        }
-        st.push(make_pair(s[i],i));
-    }
-    while(!st.empty()){
-        v.push_back(st.top().second);
-        h+= st.top().first;
-        st.pop();
-    }
-    ll m=v.size();
-    reverse(all(v));
-    char maxi = t[n-1];
-    ll j=0;
-    for(ll i=0;i<m;i++){
-        if(v[i] == maxi){
-            j=i;
+    for (int i = 1; i <= n; ++i) {
+        if (tree[i].size() == 1) {
+            cnt++;
         }
     }
-
-    for(ll i=0;i<= (m/2-1);i++){
-        swap(s[v[i]],s[v[m-i-1]]);
-    }
-    cout << (s==t? m-j-1 : -1) << nl;
+    cout << (cnt+1)/2 << nl;
 }
 
 
