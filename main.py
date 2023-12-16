@@ -1,5 +1,5 @@
 import sys
-import datetime
+import datetime, time
 
 
 Problem_name = sys.argv[1]
