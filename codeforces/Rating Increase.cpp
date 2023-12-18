@@ -1,3 +1,8 @@
+//Problem Name : Rating Increase
+//Solver : Codecrasader036
+//Date : 2023-12-18
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,31 +62,26 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Game with Multiset\"";
-
+string problem_name = "\"Rating Increase\"";
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll t;
-    cin>>t;
-    vector<ll> v(34,0);
-    while(t--){
-        ll p,q;
-        cin>>p>>q;
-        if(p==1){
-            v[q]++;
-        }else{
-            vector<ll> a=v;
-            bool flag=true;
-            for(ll i=0;i<30;i++){
-                if((q>>i)&1){
-                    a[i]? a[i]-- : flag=false;
-                }
-                a[i+1]+= a[i]/2;
-            }
-
-            cout << (flag? "YES" : "NO") << nl;
-        }
+    string s;
+    cin>>s;
+    ll n=s.size();
+    string p="";
+    p+=s[0];
+    ll q=1;
+    while(s[q]=='0'){
+        p+=s[q];
+        q++;
+    }
+    string t=s.substr(q);
+    debug(p,t);
+    if(atoll(p.c_str())<atoll(t.c_str())){
+        cout << p << " " << t << nl;
+    }else{
+        cout << "-1" << nl;
     }
 }
 
@@ -99,7 +99,7 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        //#define TEST_CASE
+        #define TEST_CASE
 
         #ifdef TEST_CASE
             ll test;

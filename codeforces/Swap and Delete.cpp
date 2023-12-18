@@ -1,3 +1,8 @@
+//Problem Name : Swap and Delete
+//Solver : Codecrasader036
+//Date : 2023-12-18
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,32 +62,30 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Game with Multiset\"";
-
+string problem_name = "\"Swap and Delete\"";
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll t;
-    cin>>t;
-    vector<ll> v(34,0);
-    while(t--){
-        ll p,q;
-        cin>>p>>q;
-        if(p==1){
-            v[q]++;
+    string s;
+    cin>>s;
+    ll n=s.size();
+    ll zero=0,one=0;
+    for(auto x: s){
+        x=='0'? zero++ : one++;
+    }
+    
+    ll i=0;
+    for(i=0;i<n;i++){
+        if(s[i]=='0'){
+            if(one>0) one--;
+            else break;
         }else{
-            vector<ll> a=v;
-            bool flag=true;
-            for(ll i=0;i<30;i++){
-                if((q>>i)&1){
-                    a[i]? a[i]-- : flag=false;
-                }
-                a[i+1]+= a[i]/2;
-            }
-
-            cout << (flag? "YES" : "NO") << nl;
+            if(zero>0) zero--;
+            else break;
         }
     }
+    debug(zero,one,i);
+    cout << n-i << nl;
 }
 
 
@@ -99,7 +102,7 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        //#define TEST_CASE
+        #define TEST_CASE
 
         #ifdef TEST_CASE
             ll test;
