@@ -1,3 +1,8 @@
+//Problem Name : E1 and E2 Game with Marbles 
+//Solver : Codecrasader036
+//Date : 2023-12-19
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//

@@ -1,3 +1,8 @@
+//Problem Name : Three Activities
+//Solver : Codecrasader036
+//Date : 2023-12-19
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,27 +62,50 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"E1 and E2 Game with Marbles \"";
+string problem_name = "\"Three Activities\"";
 
 
+void get(vector<ll>& v){
+    ll first_max = max_element(all(v))-v.begin();
+    ll val=v[first_max];
+    v[first_max]=-1;
+    ll second_max = max_element(all(v))-v.begin();
+    ll val2 = v[second_max];
+    for(auto &x: v){
+        x = (x==-1? val2: val);
+    }
+}
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
     ll n;cin>>n;
-    vector<ll> a(n),b(n);
-    for(auto &x: a)cin>>x;
-    for(auto &x: b)cin>>x;
-    vector<pair<ll,ll>> tmp;
+    vector<pair<ll,ll>> a(n),b(n),c(n);
     for(ll i=0;i<n;i++){
-        tmp.push_back(make_pair(a[i]+b[i],i));
+        ll tmp;
+        cin>>tmp;
+        a[i]=make_pair(tmp,i+1);
     }
-    sort(all(tmp));
-    ll ans=0,cnt=0;
-    for(ll i=n-1;i>=0;i--){
-        cnt%2==0 ? ans+= a[tmp[i].second]-1
-                : ans-= b[tmp[i].second]-1;
-
-        cnt++;
+    for(ll i=0;i<n;i++){
+        ll tmp;
+        cin>>tmp;
+        b[i]=make_pair(tmp,i+1);
+    }
+    for(ll i=0;i<n;i++){
+        ll tmp;
+        cin>>tmp;
+        c[i]=make_pair(tmp,i+1);
+    }
+    ll ans=0;
+    sort(all(a)),sort(all(b)),sort(all(c));
+    reverse(all(a)),reverse(all(b)),reverse(all(c));
+    for(ll x=0;x<3;x++){
+        for(ll y=0;y<3;y++){
+            for(ll z=0;z<3;z++){
+                if(a[x].second!=b[y].second and b[y].second!=c[z].second and c[z].second!=a[x].second){
+                    ans = max({ans, a[x].first+b[y].first+c[z].first});
+                }
+            }
+        }
     }
     cout << ans << nl;
 }

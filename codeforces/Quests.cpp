@@ -1,3 +1,8 @@
+//Problem Name : Quests
+//Solver : Codecrasader036
+//Date : 2023-12-19
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,27 +62,27 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"E1 and E2 Game with Marbles \"";
-
+string problem_name = "\"Quests\"";
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n;cin>>n;
+    ll n,k;cin>>n>>k;
     vector<ll> a(n),b(n);
     for(auto &x: a)cin>>x;
     for(auto &x: b)cin>>x;
-    vector<pair<ll,ll>> tmp;
-    for(ll i=0;i<n;i++){
-        tmp.push_back(make_pair(a[i]+b[i],i));
+    vector<ll>prev_sum,mx;
+    prev_sum.push_back(a[0]);
+    mx.push_back(b[0]);
+    for(ll i=1;i<n;i++){
+        prev_sum.push_back(prev_sum[prev_sum.size()-1]+a[i]);
+        mx.push_back(max({mx[mx.size()-1], b[i]}));
     }
-    sort(all(tmp));
-    ll ans=0,cnt=0;
-    for(ll i=n-1;i>=0;i--){
-        cnt%2==0 ? ans+= a[tmp[i].second]-1
-                : ans-= b[tmp[i].second]-1;
-
-        cnt++;
+    debug(prev_sum,mx);
+    ll ans=0;
+    for(ll i=0;i<min(n,k);i++){
+        ans= max({ans, prev_sum[i]+mx[i]*(k-i-1)});
+        debug(ans);
     }
     cout << ans << nl;
 }

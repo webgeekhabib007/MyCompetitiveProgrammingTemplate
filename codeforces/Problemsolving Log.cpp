@@ -1,3 +1,8 @@
+//Problem Name : Problemsolving Log
+//Solver : Codecrasader036
+//Date : 2023-12-19
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,29 +62,22 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"E1 and E2 Game with Marbles \"";
-
+string problem_name = "\"Problemsolving Log\"";
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
     ll n;cin>>n;
-    vector<ll> a(n),b(n);
-    for(auto &x: a)cin>>x;
-    for(auto &x: b)cin>>x;
-    vector<pair<ll,ll>> tmp;
-    for(ll i=0;i<n;i++){
-        tmp.push_back(make_pair(a[i]+b[i],i));
+    string s;cin>>s;
+    map<char,ll> mp;
+    for(auto x: s){
+        mp[x]++;
     }
-    sort(all(tmp));
-    ll ans=0,cnt=0;
-    for(ll i=n-1;i>=0;i--){
-        cnt%2==0 ? ans+= a[tmp[i].second]-1
-                : ans-= b[tmp[i].second]-1;
-
-        cnt++;
+    ll cnt=0;
+    for(auto [x,y]: mp){
+        if((x-'A')<y)cnt++;
     }
-    cout << ans << nl;
+    cout << cnt << nl;
 }
 
 

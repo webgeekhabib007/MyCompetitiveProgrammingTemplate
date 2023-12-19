@@ -1,3 +1,8 @@
+//Problem Name : Game with Marbles 
+//Solver : Codecrasader036
+//Date : 2023-12-19
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,7 +62,7 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"E1 and E2 Game with Marbles \"";
+string problem_name = "\"Game with Marbles \"";
 
 
 

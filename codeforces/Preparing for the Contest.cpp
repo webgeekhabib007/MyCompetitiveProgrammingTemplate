@@ -1,3 +1,8 @@
+//Problem Name : Preparing for the Contest
+//Solver : Codecrasader036
+//Date : 2023-12-19
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,29 +62,26 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"E1 and E2 Game with Marbles \"";
-
+string problem_name = "\"Preparing for the Contest\"";
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n;cin>>n;
-    vector<ll> a(n),b(n);
-    for(auto &x: a)cin>>x;
-    for(auto &x: b)cin>>x;
-    vector<pair<ll,ll>> tmp;
-    for(ll i=0;i<n;i++){
-        tmp.push_back(make_pair(a[i]+b[i],i));
+    ll n,k;
+    cin>>n>>k;
+    vector<ll> v;
+    for(ll i=1;i<=n;i++){
+        v.push_back(i);
     }
-    sort(all(tmp));
-    ll ans=0,cnt=0;
-    for(ll i=n-1;i>=0;i--){
-        cnt%2==0 ? ans+= a[tmp[i].second]-1
-                : ans-= b[tmp[i].second]-1;
-
-        cnt++;
+    if(n==k-2){
+        swap(v[n-1],v[n-2]);
+        swap(v[n-2],v[0]);
+    }else{
+        reverse(v.begin()+k,v.end());
     }
-    cout << ans << nl;
+    for(auto x: v){
+        cout << x << " ";
+    }cout << nl;
 }
 
 
