@@ -1,3 +1,8 @@
+//Problem Name : Unnatural Language Processing
+//Solver : Codecrasader036
+//Date : 2023-12-28
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,7 +62,7 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Romantic Glasses\"";
+string problem_name = "\"Unnatural Language Processing\"";
 
 bool isV(char c){
     return c=='a' or c=='e';
@@ -70,23 +75,36 @@ bool isC(char c){
 const ll mod = 1e9+7;
 void solve(ll cases=0){
     ll n;cin>>n;
-    vector<ll> v(n);
-    map<ll,ll> mp;
-    for(auto &x: v){
-        cin>>x;
-    }
-    ll odd=0,even=0;
-    for(ll i=0;i<n;i++){
-        i%2==0? odd+=v[i]: even+=v[i];
-        ll dif = odd -even;
-
-        if(!dif or mp[dif]){
-            cout << "YES" << nl;
-            return ;
+    string s;cin>>s;
+    string ans="";
+    for(ll i=0;i<n-1;i++){
+        if(isC(s[i]) and isC(s[i+1])){
+            ans+= s[i];
+            ans+='.';
+        }else if(isV(s[i]) and isC(s[i+1])){
+            ans+= s[i];
+            ans+='.';
+        }else{
+            ans+= s[i];
         }
-        mp[dif]++;
     }
-    cout << "NO" << nl;    
+    ans+=s[n-1];
+    ll m=ans.size();
+    string res="";
+    for(ll i=0;i<m-1;i++){
+        if(isC(ans[i]) and ans[i+1]=='.'){
+            res[res.size()-1] = ans[i];
+        }else{
+            res+=ans[i];
+        }
+    }
+    res+=s[n-1];
+    if(res[res.size()-2]=='.'){
+        swap(res[res.size()-2],res[res.size()-1]);
+        res.pop_back();
+    }
+    debug(res);
+    cout << res << nl;
 }
 
 

@@ -1,3 +1,8 @@
+//Problem Name : Not Quite Latin Square
+//Solver : Codecrasader036
+//Date : 2023-12-28
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,36 +62,28 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Romantic Glasses\"";
+string problem_name = "\"Not Quite Latin Square\"";
 
-bool isV(char c){
-    return c=='a' or c=='e';
-}
 
-bool isC(char c){
-    return c=='b' or c=='c' or c=='d';
-}
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n;cin>>n;
-    vector<ll> v(n);
-    map<ll,ll> mp;
-    for(auto &x: v){
-        cin>>x;
-    }
-    ll odd=0,even=0;
-    for(ll i=0;i<n;i++){
-        i%2==0? odd+=v[i]: even+=v[i];
-        ll dif = odd -even;
-
-        if(!dif or mp[dif]){
-            cout << "YES" << nl;
-            return ;
+    vector<string> v(3);
+    cin>>v[0]>>v[1]>>v[2];
+    debug(v);
+    for(auto str: v){
+        for(ll i=0;i<3;i++){
+            if(str[i]=='?'){
+                ll tot = 'A'+'B'+'C';
+                for(auto x: str){
+                    if(x == '?')continue;
+                    tot-= x;
+                }
+                char ans = tot;
+                cout << ans << nl;
+            }
         }
-        mp[dif]++;
     }
-    cout << "NO" << nl;    
 }
 
 
