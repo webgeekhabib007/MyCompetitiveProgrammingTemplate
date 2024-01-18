@@ -1,6 +1,6 @@
-YES
-YES
-NO
-YES
-NO
-YES
+0
+18068
+0
+0
+0
+0

@@ -1,3 +1,8 @@
+//Problem Name : Arranging Cats
+//Solver : Codecrasader036
+//Date : 2024-01-18
+
+
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
 //OOOOOOOOOOOOOOOOOOOkdoc:::ccccccccccccc:::clodxkOOOOOOOOOkOOOOOOOOOO//
@@ -57,19 +62,24 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Square\"";
+string problem_name = "\"Arranging Cats\"";
+
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    vector<pair<ll,ll>> v(4);
-    for(ll i=0;i<4;i++){
-        cin>>v[i].first>>v[i].second;
+    ll n;
+    cin>>n;
+    string s,t;
+    cin>>s>>t;
+    ll zero=0,one=0;
+    for(ll i=0;i<n;i++){
+        if(s[i]!=t[i]){
+            s[i]=='0' ? zero++ : one++;
+        }
     }
-    sort(all(v));
-    ll a= v[0].first- v[1].first;
-    ll b = v[0].second - v[1].second;
-    cout << a*a+b*b << nl;
+    cout << min(zero,one)+(max(zero,one)-min(zero,one)) << nl;
+    debug(zero,one);
 }
 
 

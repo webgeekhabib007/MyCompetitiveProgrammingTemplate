@@ -74,24 +74,18 @@ bool isC(char c){
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n;cin>>n;
-    vector<ll> v(n);
-    map<ll,ll> mp;
-    for(auto &x: v){
-        cin>>x;
-    }
-    ll odd=0,even=0;
+    ll n;
+    cin>>n;
+    string s,t;
+    cin>>s>>t;
+    ll zero=0,one=0;
     for(ll i=0;i<n;i++){
-        i%2==0? odd+=v[i]: even+=v[i];
-        ll dif = odd -even;
-
-        if(!dif or mp[dif]){
-            cout << "YES" << nl;
-            return ;
+        if(s[i]!=t[i]){
+            s[i]=='0' ? zero++ : one++;
         }
-        mp[dif]++;
     }
-    cout << "NO" << nl;    
+    cout << min(zero,one)+(max(zero,one)-min(zero,one)) << nl;
+    debug(zero,one);
 }
 
 
