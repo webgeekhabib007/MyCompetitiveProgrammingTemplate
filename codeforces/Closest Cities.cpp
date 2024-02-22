@@ -1,6 +1,6 @@
-//Problem Name : Preparing for the Contest
+//Problem Name : Closest Cities
 //Solver : Codecrasader036
-//Date : 2024-02-23
+//Date : 2024-01-18
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -62,26 +62,45 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Preparing for the Contest\"";
+string problem_name = "\"Closest Cities\"";
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n,k;
-    cin>>n>>k;
-    vector<ll> v;
-    for(ll i=1;i<=n;i++){
-        v.push_back(i);
+    ll n;cin>>n;
+    vector<ll> v(n);
+    for(auto &x:v)cin>>x;
+    vector<ll> l(n,0),r(n,0);
+    unordered_map<ll,ll> mp;
+    mp[0] = 1;
+    mp[n-1] = -1;
+    debug(v);
+    for(ll i=1;i<n-1;i++){
+        ll left=abs(v[i]-v[i-1]);
+        ll right=abs(v[i+1]-v[i]);
+        left< right ? mp[i]=-1 : mp[i]=1;
     }
-    if(n==k-2){
-        swap(v[n-1],v[n-2]);
-        swap(v[n-2],v[0]);
-    }else{
-        reverse(v.begin()+k,v.end());
+    l[0]=0;
+    for(ll i=1;i<n;i++){
+        mp[i]==-1 ? l[i] = 1+ l[i-1] : l[i] = l[i-1]+abs(v[i]-v[i-1]);
     }
-    for(auto x: v){
-        cout << x << " ";
-    }cout << nl;
+    r[n-1]=0;
+    for(ll i=n-2;i>=0;i--){
+        mp[i]==1 ? r[i] = 1+ r[i+1] : r[i] = r[i+1]+abs(v[i]-v[i+1]);
+    }
+
+    ll q;
+    cin>>q;
+    while(q--){
+        ll a,b;
+        cin>>a>>b;
+        a--,b--;
+        if(a==b){
+            cout << 0 << nl;
+        }else{
+            a<b ? cout << r[a]-r[b] << nl : cout << l[a]-l[b] << nl;
+        }
+    }
 }
 
 

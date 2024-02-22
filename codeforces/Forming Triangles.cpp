@@ -1,6 +1,6 @@
-//Problem Name : Preparing for the Contest
+//Problem Name : Forming Triangles
 //Solver : Codecrasader036
-//Date : 2024-02-23
+//Date : 2024-01-18
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -62,26 +62,24 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Preparing for the Contest\"";
+string problem_name = "\"Forming Triangles\"";
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n,k;
-    cin>>n>>k;
-    vector<ll> v;
-    for(ll i=1;i<=n;i++){
-        v.push_back(i);
+    ll n;cin>>n;
+    vector<ll> a(n);
+    for(auto &x: a)cin>>x;
+    sort(all(a));
+    map<ll,ll> mp;
+    ll ans=0;
+    for(ll i=0;i<n-1;i++){
+        mp[a[i]]+=i;
+        if(a[i]==a[i+1]){
+            ans+=mp[a[i]];
+        }
     }
-    if(n==k-2){
-        swap(v[n-1],v[n-2]);
-        swap(v[n-2],v[0]);
-    }else{
-        reverse(v.begin()+k,v.end());
-    }
-    for(auto x: v){
-        cout << x << " ";
-    }cout << nl;
+    cout << ans << nl;
 }
 
 

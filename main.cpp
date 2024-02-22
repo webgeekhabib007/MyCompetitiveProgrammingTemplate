@@ -57,19 +57,26 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Square\"";
+string problem_name = "\"Preparing for the Contest\"";
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    vector<pair<ll,ll>> v(4);
-    for(ll i=0;i<4;i++){
-        cin>>v[i].first>>v[i].second;
+    ll n,k;
+    cin>>n>>k;
+    vector<ll> v;
+    for(ll i=1;i<=n;i++){
+        v.push_back(i);
     }
-    sort(all(v));
-    ll a= v[0].first- v[1].first;
-    ll b = v[0].second - v[1].second;
-    cout << a*a+b*b << nl;
+    if(n==k-2){
+        swap(v[n-1],v[n-2]);
+        swap(v[n-2],v[0]);
+    }else{
+        reverse(v.begin()+k,v.end());
+    }
+    for(auto x: v){
+        cout << x << " ";
+    }cout << nl;
 }
 
 

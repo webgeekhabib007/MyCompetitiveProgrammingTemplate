@@ -1,6 +1,6 @@
-//Problem Name : Preparing for the Contest
+//Problem Name : Sasha and the Beautiful Array
 //Solver : Codecrasader036
-//Date : 2024-02-23
+//Date : 2024-02-15
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -62,26 +62,14 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Preparing for the Contest\"";
+string problem_name = "\"Sasha and the Beautiful Array\"";
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n,k;
-    cin>>n>>k;
-    vector<ll> v;
-    for(ll i=1;i<=n;i++){
-        v.push_back(i);
-    }
-    if(n==k-2){
-        swap(v[n-1],v[n-2]);
-        swap(v[n-2],v[0]);
-    }else{
-        reverse(v.begin()+k,v.end());
-    }
-    for(auto x: v){
-        cout << x << " ";
-    }cout << nl;
+    ll n;
+    cin>>n;
+    
 }
 
 
