@@ -58,30 +58,69 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Building an Aquarium\"";
+string problem_name = "\"Distinct Characters Queries\"";
+
+
+class FenwickTree {
+private:
+    vector<ll> tree;
+public:
+    FenwickTree(ll size) : tree(size + 1, 0) {}
+
+    void update(ll idx, ll val) {
+        idx++;
+        while (idx < tree.size()) {
+            tree[idx] += val;
+            idx += idx & -idx; // Update the next node
+        }
+    }
+
+    int query(ll idx) {
+        int sum = 0;
+        while (idx > 0) {
+            sum += tree[idx];
+            idx -= idx & -idx; // Move to the parent node
+        }
+        return sum;
+    }
+};
 
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n,x;
-    cin>>n>>x;
-    vector<ll> v(n);
-    for(auto &x: v)cin>>x;
-    ll low = 0 ,high = 2000000007;
-    while(low < high){
-        ll mid = low + (high - low+1)/2;
-        ll tot=0;
-        for(auto x: v){
-            tot+= max(mid - x,0LL);
-        }
-        if(tot <= x){
-            low = mid;
+    string s;
+    cin>>s;
+    ll n = s.size();
+    vector<FenwickTree> v(26,FenwickTree(n+1));
+
+    for(ll i = 0 ;i<n;i++){
+        v[s[i]-'a'].update(i,1);
+    }
+    
+    ll q;
+    cin>>q;
+    while(q--){
+        ll type;
+        cin>>type;
+        if(type == 1){
+            ll pos;
+            char ch;
+            cin>>pos >> ch;
+            pos--;
+            v[s[pos]-'a'].update(pos,-1);
+            s[pos]=ch;
+            v[s[pos]-'a'].update(pos,1);
         }else{
-            high = mid -1;
+            ll l,r;
+            cin>>l>>r;
+            ll ans = 0;
+            for(int i=0;i<26;i++){
+                ans+= (v[i].query(r)-v[i].query(l-1))>0;
+            }
+            cout <<ans << nl;
         }
     }
-    cout << low << nl;
 }
 
 
@@ -98,7 +137,7 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        #define TEST_CASE
+        //#define TEST_CASE
 
         #ifdef TEST_CASE
             ll test;

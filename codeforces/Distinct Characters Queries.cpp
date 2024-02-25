@@ -1,4 +1,4 @@
-//Problem Name : Building an Aquarium
+//Problem Name : Distinct Characters Queries
 //Solver : Codecrasader036
 //Date : 2024-02-25
 
@@ -63,7 +63,7 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Building an Aquarium\"";
+string problem_name = "\"Distinct Characters Queries\"";
 
 
 class FenwickTree {
