@@ -58,69 +58,25 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Distinct Characters Queries\"";
-
-
-class FenwickTree {
-private:
-    vector<ll> tree;
-public:
-    FenwickTree(ll size) : tree(size + 1, 0) {}
-
-    void update(ll idx, ll val) {
-        idx++;
-        while (idx < tree.size()) {
-            tree[idx] += val;
-            idx += idx & -idx; // Update the next node
-        }
-    }
-
-    int query(ll idx) {
-        int sum = 0;
-        while (idx > 0) {
-            sum += tree[idx];
-            idx -= idx & -idx; // Move to the parent node
-        }
-        return sum;
-    }
-};
+string problem_name = "\"Turtle vs. Rabbit Race: Optimal Trainings\"";
 
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    string s;
-    cin>>s;
-    ll n = s.size();
-    vector<FenwickTree> v(26,FenwickTree(n+1));
+    ll a,b,l;
+    cin>>a>>b>>l;
+    ll limit_a = (ll)(log10(l)/log10(a)) + 2;
+    ll limit_b = (ll)(log10(l)/log10(b)) + 2;
 
-    for(ll i = 0 ;i<n;i++){
-        v[s[i]-'a'].update(i,1);
-    }
-    
-    ll q;
-    cin>>q;
-    while(q--){
-        ll type;
-        cin>>type;
-        if(type == 1){
-            ll pos;
-            char ch;
-            cin>>pos >> ch;
-            pos--;
-            v[s[pos]-'a'].update(pos,-1);
-            s[pos]=ch;
-            v[s[pos]-'a'].update(pos,1);
-        }else{
-            ll l,r;
-            cin>>l>>r;
-            ll ans = 0;
-            for(int i=0;i<26;i++){
-                ans+= (v[i].query(r)-v[i].query(l-1))>0;
-            }
-            cout <<ans << nl;
+    set<ll> st;
+    for(ll i=0;i<limit_a;i++){
+        for(ll j=0;j<=limit_b;j++){
+            ll prod = (ll)powl(a,i)*(ll)powl(b,j);
+            if(prod <= l and l%prod==0)st.insert(prod);
         }
     }
+    cout << st.size() << nl;
 }
 
 
@@ -137,7 +93,7 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        //#define TEST_CASE
+        #define TEST_CASE
 
         #ifdef TEST_CASE
             ll test;
