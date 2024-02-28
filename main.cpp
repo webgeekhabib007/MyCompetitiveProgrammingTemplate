@@ -58,30 +58,23 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Turtle vs. Rabbit Race: Optimal Trainings\"";
+string problem_name = "\"Turtle Fingers: Count the Values of k\"";
 
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n;cin>>n;
-    vector<ll> v(n);
-    for(auto &x : v)cin>>x;
-    vector<ll> pref={0};
-    for(auto x: v)pref.push_back(pref.back()+x);
-    ll q;
-    cin>>q;
-    while(q--){
-        ll l,u;
-        cin>>l>>u;
-        u+= pref[l-1];
-        ll pos = lower_bound(pref.begin()+l,pref.end(),u)-pref.begin();
-        if(pref[pos]-u > u - pref[pos-1])pos--;
-        pos = max(pos,l); // pos >= l
-        pos = min(pos,n); // pos <= n
-        cout << pos << " ";
+    ll a,b,l;
+    cin>>a>>b>>l;
+    ll x=1,y=1;
+    set<ll> st;
+    while(x<= l){
+        while(y <= l){
+            prod = x*y;
+            prod<=l and l%prod==0? st.insert(prod) ? 1;
+        }
     }
-    cout << nl;
+    cout << st.size() << nl;
 }
 
 
