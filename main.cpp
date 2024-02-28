@@ -64,19 +64,24 @@ string problem_name = "\"Turtle vs. Rabbit Race: Optimal Trainings\"";
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll a,b,l;
-    cin>>a>>b>>l;
-    ll limit_a = (ll)(log10(l)/log10(a)) + 2;
-    ll limit_b = (ll)(log10(l)/log10(b)) + 2;
-
-    set<ll> st;
-    for(ll i=0;i<limit_a;i++){
-        for(ll j=0;j<=limit_b;j++){
-            ll prod = (ll)powl(a,i)*(ll)powl(b,j);
-            if(prod <= l and l%prod==0)st.insert(prod);
-        }
+    ll n;cin>>n;
+    vector<ll> v(n);
+    for(auto &x : v)cin>>x;
+    vector<ll> pref={0};
+    for(auto x: v)pref.push_back(pref.back()+x);
+    ll q;
+    cin>>q;
+    while(q--){
+        ll l,u;
+        cin>>l>>u;
+        u+= pref[l-1];
+        ll pos = lower_bound(pref.begin()+l,pref.end(),u)-pref.begin();
+        if(pref[pos]-u > u - pref[pos-1])pos--;
+        pos = max(pos,l); // pos >= l
+        pos = min(pos,n); // pos <= n
+        cout << pos << " ";
     }
-    cout << st.size() << nl;
+    cout << nl;
 }
 
 
