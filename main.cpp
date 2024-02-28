@@ -58,7 +58,7 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Turtle Fingers: Count the Values of k\"";
+string problem_name = "\"Turtle vs. Rabbit Race: Optimal Trainings\"";
 
 
 
@@ -66,12 +66,14 @@ const ll mod = 1e9+7;
 void solve(ll cases=0){
     ll a,b,l;
     cin>>a>>b>>l;
-    ll x=1,y=1;
+    ll limit_a = (ll)(log10(l)/log10(a)) + 2;
+    ll limit_b = (ll)(log10(l)/log10(b)) + 2;
+
     set<ll> st;
-    while(x<= l){
-        while(y <= l){
-            prod = x*y;
-            prod<=l and l%prod==0? st.insert(prod) ? 1;
+    for(ll i=0;i<limit_a;i++){
+        for(ll j=0;j<=limit_b;j++){
+            ll prod = (ll)powl(a,i)*(ll)powl(b,j);
+            if(prod <= l and l%prod==0)st.insert(prod);
         }
     }
     cout << st.size() << nl;
