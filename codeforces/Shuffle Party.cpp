@@ -1,3 +1,8 @@
+//Problem Name : Shuffle Party
+//Solver : Codecrasader036
+//Date : 2024-02-29
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,30 +63,15 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Binary Path\"";
+string problem_name = "\"Shuffle Party\"";
 
 
 
 const ll mod = 1e9+7;
 void solve(ll cases=0){
-    ll n;
-    cin>>n;
-    string s;
-    cin>>s;
-    vector<ll> v(n);
-    for(ll i=0;i<n;i++){
-        ll pos = i;
-        ll t =0;
-        while(pos>=0 and pos < n){
-            t++;
-            s[pos]=='<'? pos-- : pos++;
-            s[pos] = (s[pos]=='<'? '>' : '<');
-        }
-        v[i] = t;
-    }
-    for(auto x: v){
-        cout << x << " ";
-    }cout << nl;
+    ll n;cin>>n;
+    ll pos = log2(n);
+    cout << (ll)powl(2,pos) << nl;
 }
 
 

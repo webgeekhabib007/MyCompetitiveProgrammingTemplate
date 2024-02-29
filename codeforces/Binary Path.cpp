@@ -1,3 +1,8 @@
+//Problem Name : Binary Path
+//Solver : Codecrasader036
+//Date : 2024-02-29
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
