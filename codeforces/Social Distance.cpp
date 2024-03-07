@@ -1,3 +1,8 @@
+//Problem Name : Social Distance
+//Solver : Codecrasader036
+//Date : 2024-03-07
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,23 +63,63 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Mean Inequality\"";
+string problem_name = "\"Social Distance\"";
 
 const ll mod = 100;
 
 
 
 void solve(ll cases=0){
-    ll n;cin>>n;
-    vector<ll> v(2*n);
-    for(auto &x: v){
-        cin>>x;
+    ll n,k;
+    cin>>n>>k;
+    string s;
+    cin>>s;
+    if(n<=k){
+        for(ll i=0;i<n;i++){
+            if(s[i]=='1'){
+                cout << '0' << nl;
+                return ;
+            }
+        }
+        cout << '1' << nl;
+        return ;
     }
-    sort(all(v));
+    ll ans=0;
+    ll cnt=0;
+    ll p=0;
+    while(p<n and s[p]=='0'){
+        p++;
+        cnt++;
+    }
+    if(cnt>k){
+        s[0]='1';
+        ans++;
+    }
+    p=n-1;
+    cnt=0;
+    while(p>=0 and s[p]=='0'){
+        p--;
+        cnt++;
+    }
+    if(cnt>k){
+        s[n-1]='1';
+        ans++;
+    }
+    debug(s);
     for(ll i=0;i<n;i++){
-        cout << v[i] << " " << v[i+n] << " ";
-    }cout << nl;
-    
+        if(s[i]=='0'){
+            ll j=i;
+            ll c=0;
+            while(j<n and s[j]=='0'){
+                c++;
+                j++;
+            }
+            i=j-1;
+
+            ans+= ((c-k)/(k+1));
+        }
+    }
+    cout << ans << nl;
 }
 
 

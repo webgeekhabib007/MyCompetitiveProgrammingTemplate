@@ -1,3 +1,8 @@
+//Problem Name : Mean Inequality
+//Solver : Codecrasader036
+//Date : 2024-03-08
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
