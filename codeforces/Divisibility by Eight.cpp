@@ -1,3 +1,8 @@
+//Problem Name : Divisibility by Eight
+//Solver : Codecrasader036
+//Date : 2024-03-07
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,22 +63,58 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"I Hate 1111\"";
+string problem_name = "\"Divisibility by Eight\"";
 
 const ll mod = 100;
 
 
 
 void solve(ll cases=0){
-    ll n;
-    cin>>n;
-    for(ll i=0;i<20;i++){
-        if(n%11==0){
-            cout << "YES" << nl;
+    string s;
+    cin>>s;
+    ll n = s.size();
+    auto get_num = [&](string &a)->ll{
+        stringstream ss;
+        ss << a;
+        ll num;
+        ss >> num;
+        return num;
+    };
+    for(ll i=0;i<n;i++){
+        string t1 = "";
+        t1+= s[i];
+        ll p = get_num(t1);
+        if(p%8==0){
+            cout << "YES" << nl << t1;
             return ;
         }
-        n-=111;
-        if(n<0)break;
+    }
+    for(ll i=0;i<n;i++){
+        for(ll j=i+1;j<n;j++){
+            string t2="";
+            t2+= s[i];
+            t2+=s[j];
+            ll p = get_num(t2);
+            if(p%8==0){
+                cout << "YES" << nl << t2;
+                return ;
+            }
+        }
+    }
+    for(ll i=0;i<n;i++){
+        for(ll j=i+1;j<n;j++){
+            for(ll k=j+1;k<n;k++){
+                string t3 = "";
+                t3+= s[i];
+                t3+= s[j];
+                t3+= s[k];
+                ll p = get_num(t3);
+                if(p%8==0){
+                    cout << "YES" << nl << t3;
+                    return ;
+                }
+            }
+        }
     }
     cout << "NO" << nl;
 }
@@ -93,7 +134,7 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        #define TEST_CASE
+        //#define TEST_CASE
 
         
 

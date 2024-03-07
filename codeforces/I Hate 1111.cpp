@@ -1,3 +1,8 @@
+//Problem Name : I Hate 1111
+//Solver : Codecrasader036
+//Date : 2024-03-07
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//

@@ -1,3 +1,8 @@
+//Problem Name : Choose the Different Ones!
+//Solver : Codecrasader036
+//Date : 2024-03-06
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,24 +63,52 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"I Hate 1111\"";
+string problem_name = "\"Choose the Different Ones!\"";
 
 const ll mod = 100;
 
 
 
 void solve(ll cases=0){
-    ll n;
-    cin>>n;
-    for(ll i=0;i<20;i++){
-        if(n%11==0){
-            cout << "YES" << nl;
-            return ;
-        }
-        n-=111;
-        if(n<0)break;
+    ll n,m,k;
+    cin>>n>>m>>k;
+    vector<ll> v(n),u(m);
+    for(auto &x: v)cin>>x;
+    for(auto &x: u)cin>>x;
+
+    map<ll,ll> a,b;
+    for(auto x: v){
+        a[x]++;
     }
-    cout << "NO" << nl;
+    for(auto x: u){
+        b[x]++;
+    }
+    ll cnt = 0,p=0,q=0;
+    for(ll i=1;i<=k;i++){
+        if(a.find(i)==a.end() and b.find(i)==b.end()){
+            cout << "NO" << nl;
+            return ;
+        }else{
+            if(a.find(i)!=a.end() and b.find(i)!=b.end())cnt++;
+            else{
+                if(a.find(i)!=a.end())p++;
+                else q++;
+            }
+        }
+    }
+    ll tar = k/2;
+    if(p<tar){
+        ll dif = tar-p;
+        p= tar;
+        cnt-=dif;
+    }
+    if(q<tar){
+        ll dif = tar-q;
+        q= tar;
+        cnt-=dif;
+    }
+    debug(cnt,p,q);
+    cout << (cnt<0? "NO" : "YES" ) << nl;
 }
 
 

@@ -1,3 +1,8 @@
+//Problem Name : Given Length and Sum of Digits...
+//Solver : Codecrasader036
+//Date : 2024-03-06
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,24 +63,77 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"I Hate 1111\"";
+string problem_name = "\"Given Length and Sum of Digits...\"";
 
 const ll mod = 100;
 
 
 
 void solve(ll cases=0){
-    ll n;
-    cin>>n;
-    for(ll i=0;i<20;i++){
-        if(n%11==0){
-            cout << "YES" << nl;
-            return ;
+    ll n,m;
+    cin>>n>>m;
+
+    auto min_num = [&](ll n,ll s)->string{
+        vector<ll> v(n);
+        ll i = n-1;
+        while(i>=0){
+            ll tmp = min(s,9LL);
+            v[i] = tmp;
+            s -= tmp;
+            i--;
         }
-        n-=111;
-        if(n<0)break;
+        debug(v);
+        if(s>0)return "-1";
+
+        if(v[n-1]==0)return "-1";
+        if(v[0]==0){
+            i = n-1;
+            while(i>=0 and v[i]!=0){
+                i--;
+            }
+            v[i+1]--;
+            v[0]++;
+        }
+        debug(v);
+        string ans = "";
+        for(auto x: v){
+            ans+= (x+'0');
+        }
+        return ans;
+    };
+    auto max_num = [&](ll n,ll s)->string{
+        vector<ll> v(n);
+        ll i = 0;
+        while(i<n){
+            ll tmp = min(s,9LL);
+            v[i] = tmp;
+            s -= tmp;
+            i++;
+        }
+        debug(v);
+
+        if(s>0) return "-1";
+        string ans = "";
+        for(auto x: v){
+            ans+= (x+'0');
+        }
+        return ans;
+    };
+
+    if(n==1){
+        if(m>9)cout << "-1 -1" << nl;
+        else cout << m << " " << m << nl;
+        return ;
     }
-    cout << "NO" << nl;
+    
+    string s1 = min_num(n,m);
+    string s2 = max_num(n,m);
+    debug(s1,s2);
+    if( s1 == "-1" or s2 == "-1"){
+        cout<< "-1 -1" << nl;
+        return ;
+    }
+    cout << s1 << " " << s2 << nl;
 }
 
 
@@ -93,7 +151,7 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        #define TEST_CASE
+        //#define TEST_CASE
 
         
 

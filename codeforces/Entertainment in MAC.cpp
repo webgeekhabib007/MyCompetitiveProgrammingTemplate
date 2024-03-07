@@ -1,3 +1,8 @@
+//Problem Name : Entertainment in MAC
+//Solver : Codecrasader036
+//Date : 2024-03-06
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,24 +63,36 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"I Hate 1111\"";
+string problem_name = "\"Entertainment in MAC\"";
 
 const ll mod = 100;
 
 
 
 void solve(ll cases=0){
-    ll n;
-    cin>>n;
-    for(ll i=0;i<20;i++){
-        if(n%11==0){
-            cout << "YES" << nl;
-            return ;
-        }
-        n-=111;
-        if(n<0)break;
+    ll n;cin>>n;
+    vector<ll> v(n);
+    for(auto &x: v){
+        cin>>x;
     }
-    cout << "NO" << nl;
+    vector<ll> prev(n,-1);
+    for(ll i=1;i<n;i++){
+        prev[i] = prev[i-1];
+        if(v[i]!=v[i-1]){
+            prev[i] = i-1;
+        }
+    }
+    debug(prev);
+    ll q;
+    cin>>q;
+    while(q--){
+        ll a,b;
+        cin>>a>>b;
+        a--,b--;
+        if(prev[b]>=a)cout << prev[b]+1 << " " << b+1;
+        else cout << "-1 -1";
+        cout << nl;
+    }
 }
 
 

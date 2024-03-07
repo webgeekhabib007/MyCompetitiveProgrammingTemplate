@@ -1,3 +1,8 @@
+//Problem Name : Anna and the Valentine's Day Gift
+//Solver : Codecrasader036
+//Date : 2024-03-06
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,24 +63,42 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"I Hate 1111\"";
+string problem_name = "\"Anna and the Valentine's Day Gift\"";
 
 const ll mod = 100;
 
 
 
 void solve(ll cases=0){
-    ll n;
-    cin>>n;
-    for(ll i=0;i<20;i++){
-        if(n%11==0){
-            cout << "YES" << nl;
-            return ;
-        }
-        n-=111;
-        if(n<0)break;
+    ll n,m;
+    cin>>n>>m;
+    vector<string> v(n);
+    ll ans= 0;
+    for(auto &x: v){
+        cin>>x;
+        ans+= (ll)x.size();
     }
-    cout << "NO" << nl;
+
+    auto get_0s = [](string &s)->ll{
+        ll cnt=0;
+        ll i=s.size()-1;
+        while(s[i]=='0'){
+            i--;
+            cnt++;
+        }
+        return cnt;
+    };
+
+    vector<ll> dp(n,0);
+    for(ll i=0;i<n;i++){
+        dp[i] = get_0s(v[i]);
+    }
+    sort(all(dp),[](ll a,ll b)->bool{return a>b;});
+    debug(dp);
+    for(ll i=0;i<n;i+=2){
+        ans-= dp[i];
+    }
+    cout << (ans>m? "Sasha" : "Anna") << nl;
 }
 
 

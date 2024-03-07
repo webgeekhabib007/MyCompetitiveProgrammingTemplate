@@ -1,6 +1,6 @@
 //Problem Name : Yet Another Coin Problem
 //Solver : Codecrasader036
-//Date : 2024-03-01
+//Date : 2024-03-05
 
 
 
@@ -65,13 +65,32 @@ typedef unsigned long long int ull;
 
 string problem_name = "\"Yet Another Coin Problem\"";
 
+const ll mod = 100;
 
 
-const ll mod = 1e9+7;
+
 void solve(ll cases=0){
     ll n;cin>>n;
-    vector<ll> coins = {15,10,6,3,1};
-    cout << n << nl;
+    string s;cin>>s;
+    ll p = s.size(),flag ;
+    for(ll i=0;i<p/2;i++){
+        if(s[i]<s[p-1-i]){
+            flag = 0;
+            break;
+        }
+        if(s[i]>s[p-1-i]){
+            flag = 1;
+            break;
+        }
+    }
+
+    if(flag == 0)cout << s << nl;
+    else{
+        string cp = s;
+        reverse(all(s));
+        s+=cp;
+        cout << s << nl;
+    }
 }
 
 
@@ -84,11 +103,14 @@ int main(int argc, char const *argv[])
     #ifndef ONLINE_JUDGE
         freopen("input.txt","r",stdin);
         freopen("output.txt","w",stdout);
+        freopen("error.txt","w",stderr);
         string cmd = "python main.py "+problem_name;
         system(cmd.c_str());
     #endif
 
         #define TEST_CASE
+
+        
 
         #ifdef TEST_CASE
             ll test;

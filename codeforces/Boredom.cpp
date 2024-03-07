@@ -1,3 +1,8 @@
+//Problem Name : Boredom
+//Solver : Codecrasader036
+//Date : 2024-03-06
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,7 +63,7 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"I Hate 1111\"";
+string problem_name = "\"Boredom\"";
 
 const ll mod = 100;
 
@@ -67,15 +72,19 @@ const ll mod = 100;
 void solve(ll cases=0){
     ll n;
     cin>>n;
-    for(ll i=0;i<20;i++){
-        if(n%11==0){
-            cout << "YES" << nl;
-            return ;
-        }
-        n-=111;
-        if(n<0)break;
+    vector<ll> v(n);
+    map<ll,ll> mp;
+    for(auto &x: v){
+        cin >>x;
+        mp[x]++;
     }
-    cout << "NO" << nl;
+    ll mx = *max_element(all(v));
+    vector<ll> dp(mx+1,0);
+    dp[1] = mp[1];
+    for(ll i=2;i<=mx;i++){
+        dp[i] = max(dp[i-1],dp[i-2]+mp[i]*i);
+    }
+    cout << dp[mx] << nl;
 }
 
 
@@ -93,7 +102,7 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        #define TEST_CASE
+        //#define TEST_CASE
 
         
 

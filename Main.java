@@ -1,41 +1,23 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+void solve(ll cases=0){
+    ll n;cin>>n;
+    string s;cin>>s;
+    ll p = s.size(),flag ;
+    for(ll i=0;i<p/2;i++){
+        if(s[i]<s[p-1-i]){
+            flag = 0;
+            break;
+        }
+        if(s[i]>s[p-1-i]){
+            flag = 1;
+            break;
+        }
+    }
 
-public class D {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int t = Integer.parseInt(br.readLine().trim());
-        while (t-- > 0) {
-            int n = Integer.parseInt(br.readLine().trim());
-            String s = br.readLine().trim();
-            int[] answer = calculatePinballTime(n, s);
-            for (int i = 0; i < n; i++) {
-                System.out.print(answer[i] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    public static int[] calculatePinballTime(int n, String s) {
-        int[] answer = new int[n];
-        for (int i = 0; i < n; i++) {
-            char[] grid = s.toCharArray();
-            int seconds = 0;
-            int pos = i;
-            while (pos >= 0 && pos < n) {
-                if (grid[pos] == '>') {
-                    grid[pos] = '<';
-                    pos++;
-                } else {
-                    grid[pos] = '>';
-                    pos--;
-                }
-                seconds++;
-            }
-            answer[i] = seconds;
-        }
-        return answer;
-    }
+    if(flag == 0)cout << s << nl;
+    else{
+        string cp = s;
+        reverse(all(s));
+        s+=cp;
+        cout << s << nl;
+    }
 }
