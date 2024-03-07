@@ -1,23 +1,12 @@
-void solve(ll cases=0){
-    ll n;cin>>n;
-    string s;cin>>s;
-    ll p = s.size(),flag ;
-    for(ll i=0;i<p/2;i++){
-        if(s[i]<s[p-1-i]){
-            flag = 0;
-            break;
-        }
-        if(s[i]>s[p-1-i]){
-            flag = 1;
-            break;
-        }
-    }
 
-    if(flag == 0)cout << s << nl;
-    else{
-        string cp = s;
-        reverse(all(s));
-        s+=cp;
-        cout << s << nl;
+import java.lang.*;
+import java.util.*;
+
+public class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int  a = scan.nextInt();
+        System.out.print("hello world"+a);
+        return ;
     }
 }

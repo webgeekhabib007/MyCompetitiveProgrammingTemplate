@@ -1,3 +1,8 @@
+//Problem Name : Most socially-distanced subsequence
+//Solver : Codecrasader036
+//Date : 2024-03-08
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
