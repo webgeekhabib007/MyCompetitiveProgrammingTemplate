@@ -1,3 +1,8 @@
+//Problem Name : Insert and Equalize
+//Solver : Codecrasader036
+//Date : 2024-03-08
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
