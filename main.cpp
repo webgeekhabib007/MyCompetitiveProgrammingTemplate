@@ -65,42 +65,38 @@ const ll mod = 100;
 
 
 void solve(ll cases=0){
-    ll n;cin>>n;
-    vector<ll> v(n);
-    ll mn = 0;
-    for(auto &x: v){
-        cin>>x;
-        mn = min({mn,x});
-    }
-    mn = abs(mn);
-    ll mx = 0;
-    map<ll,ll> mp;
-    for(auto &x: v){
-        x+= mn;
-        mx = max(mx,x);
-        mp[x]++;
-    }
-    ll gcd = 0LL;
-    for(auto &x: v){
-        gcd = __gcd(gcd,x);
-    }
-    ll ans = 0;
-    gcd = max(gcd,1LL);
-    for(auto &x: v){
-        ans+= (mx-x)/gcd;
-    }
-    ll cp = mx;
-    mx -= gcd;
-    while(mx>=0){
-        if(mp.find(mx) == mp.end()){
-            ans+= (cp - mx)/gcd;
-            break;
-        }else{
-            mx-=gcd;
+    ll n,q;
+    cin>>n>>q;
+    string s;
+    cin>>s;
+    set<ll> st;
+
+    auto is = [&](ll l,ll r, string& s)->bool{
+        while (l < r){
+            if(s[l] != s[r])return true;
+            l++;
+            r--;
         }
+        return false;
+    };
+    function<void(ll,ll,ll,ll&,string&,set<ll>&)> get=[&](ll l,ll r,ll n,ll &ans,string &s,set<ll> &st)->void{
+        if (l >= r)return ;
+        if(is(l,r,s) and !st.count(r - l + 1)){
+            st.insert(r - l + 1);
+            ans += r - l + 1;
+        }
+        get(l + 1, r, n, ans, s, st);
+        get(l, r - 1, n, ans, s, st);
+    };
+    while(q--){
+        st.clear();
+        int l, r;
+        cin >> l >> r;
+        l--,r--;
+        ll ans = 0;
+        get(l, r, n, ans, s, st);
+        cout << ans << endl;
     }
-    debug(ans);
-    cout << ans << nl;
 }
 
 
@@ -113,7 +109,7 @@ int main(int argc, char const *argv[])
     #ifndef ONLINE_JUDGE
         freopen("input.txt","r",stdin);
         freopen("output.txt","w",stdout);
-        freopen("error.txt","w",stderr);
+        //freopen("error.txt","w",stderr);
         string cmd = "python main.py "+problem_name;
         system(cmd.c_str());
     #endif
