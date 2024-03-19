@@ -1,6 +1,6 @@
-//Problem Name : Insert and Equalize
+//Problem Name : D. Zero Remainder Array
 //Solver : Codecrasader036
-//Date : 2024-03-16
+//Date : 2024-03-20
 
 
 
@@ -63,64 +63,28 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Insert and Equalize\"";
+string problem_name = "\"D. Zero Remainder Array\"";
 
 const ll mod = 100;
 
 
 
-void get(const string& s, vector<vector<bool>>& isPalindrome) {
-    int n = s.length();
-    for (int len = 1; len <= n; ++len) {
-        for (int i = 0; i + len - 1 < n; ++i) {
-            int j = i + len - 1;
-            if (len == 1)
-                isPalindrome[i][j] = true;
-            else if (len == 2)
-                isPalindrome[i][j] = (s[i] == s[j]);
-            else
-                isPalindrome[i][j] = (s[i] == s[j] && isPalindrome[i + 1][j - 1]);
-        }
-    }
-}
-
-
-
 void solve(ll cases=0){
-    ll n,q;
-    cin>>n>>q;
-    string s;
-    cin>>s;
-
-    auto is = [&](ll l,ll r, string& s)->bool{
-        while (l < r){
-            if(s[l] != s[r])return true;
-            l++;
-            r--;
-        }
-        return false;
-    };
-    
-    vector<vector<bool>> isPalindrome(n, vector<bool>(n, false));
-    get(s, isPalindrome);
-    while(q--){
-        int l, r;
-        cin >> l >> r;
-        l--,r--;
-        ll ans = 0;
-        unordered_set<int> st;
-
-        for(ll i = l; i <= r; ++i) {
-            for (ll j = i; j <= r; ++j) {
-                if (!isPalindrome[i][j] && !st.count(j - i + 1)) {
-                    st.insert(j - i + 1);
-                    ans += j - i + 1;
-                }
-            }
-        }
-
-        cout << ans << endl;
+    ll n,k;
+    cin>>n>>k;
+    map<ll,ll> mp;
+    for(ll i=0;i<n;i++){
+        ll tmp;
+        cin>>tmp;
+        if(tmp%k==0)continue;
+        mp[k-tmp%k]++;
     }
+    ll mx = -1;
+    for(auto it: mp){
+        ll x = it.first,y = it.second;
+        mx = max(mx, x + (k*(y-1)));
+    }
+    cout << mx+1 << nl;
 }
 
 

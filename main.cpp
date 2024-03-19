@@ -58,45 +58,28 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Insert and Equalize\"";
+string problem_name = "\"D. Zero Remainder Array\"";
 
 const ll mod = 100;
 
 
 
 void solve(ll cases=0){
-    ll n,q;
-    cin>>n>>q;
-    string s;
-    cin>>s;
-    set<ll> st;
-
-    auto is = [&](ll l,ll r, string& s)->bool{
-        while (l < r){
-            if(s[l] != s[r])return true;
-            l++;
-            r--;
-        }
-        return false;
-    };
-    function<void(ll,ll,ll,ll&,string&,set<ll>&)> get=[&](ll l,ll r,ll n,ll &ans,string &s,set<ll> &st)->void{
-        if (l >= r)return ;
-        if(is(l,r,s) and !st.count(r - l + 1)){
-            st.insert(r - l + 1);
-            ans += r - l + 1;
-        }
-        get(l + 1, r, n, ans, s, st);
-        get(l, r - 1, n, ans, s, st);
-    };
-    while(q--){
-        st.clear();
-        int l, r;
-        cin >> l >> r;
-        l--,r--;
-        ll ans = 0;
-        get(l, r, n, ans, s, st);
-        cout << ans << endl;
+    ll n,k;
+    cin>>n>>k;
+    map<ll,ll> mp;
+    for(ll i=0;i<n;i++){
+        ll tmp;
+        cin>>tmp;
+        if(tmp%k==0)continue;
+        mp[k-tmp%k]++;
     }
+    ll mx = -1;
+    for(auto it: mp){
+        ll x = it.first,y = it.second;
+        mx = max(mx, x + (k*(y-1)));
+    }
+    cout << mx+1 << nl;
 }
 
 
