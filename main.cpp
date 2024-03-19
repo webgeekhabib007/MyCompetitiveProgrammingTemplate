@@ -58,7 +58,7 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"B. Equal XOR\"";
+string problem_name = "\"B. Phoenix and Beauty\"";
 
 const ll mod = 100;
 
@@ -67,53 +67,20 @@ const ll mod = 100;
 void solve(ll cases=0){
     ll n,k;
     cin>>n>>k;
-    vector<ll>v(2*n);
-    map<ll,ll> mp;
+    vector<ll> v(n);
     for(auto &x: v){
         cin>>x;
     }
-    vector<ll> zero,one,two;
-    for(ll i=0;i<n;i++){
-        mp[v[i]]++;
+    map<ll,ll> mp;
+    for(ll i=0;i<k;i++){
+        mp[i]++;
     }
-    for(ll i=1;i<=n;i++){
-        if(mp[i]==0)zero.push_back(i);
-        else if(mp[i]==1)one.push_back(i);
-        else two.push_back(i);
-    }
-    vector<ll> l ,r;
-    ll cnt=0;
-    k*=2;
-    for(auto x: two){
-        if(cnt < k){
-            cnt+=2;
-            l.push_back(x),l.push_back(x);
+    for(ll i=k;i<n;i++){
+        if(mp.find(v[i])!= mp.end()){
+            cout << "-1" << nl;
+            return ;
         }
     }
-    for(auto x: one){
-        if(cnt < k){
-            cnt+=1;
-            l.push_back(x);
-        }
-    }
-    cnt=0;
-    for(auto x: zero){
-        if(cnt < k){
-            cnt+=2;
-            r.push_back(x),r.push_back(x);
-        }
-    }
-    for(auto x: one){
-        if(cnt < k){
-            cnt+=1;
-            r.push_back(x);
-        }
-    }
-    debug(l,r);
-    for(auto x: l)cout << x << " ";
-    cout << nl;
-    for(auto x: r)cout << x << " ";
-    cout << nl;
 }
 
 
