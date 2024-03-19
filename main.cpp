@@ -58,7 +58,7 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"D. Zero Remainder Array\"";
+string problem_name = "\"B. Equal XOR\"";
 
 const ll mod = 100;
 
@@ -67,19 +67,48 @@ const ll mod = 100;
 void solve(ll cases=0){
     ll n,k;
     cin>>n>>k;
+    vector<ll>v(2*n);
     map<ll,ll> mp;
+    for(auto &x: v){
+        cin>>x;
+    }
+    vector<ll> zero,one,two;
     for(ll i=0;i<n;i++){
-        ll tmp;
-        cin>>tmp;
-        if(tmp%k==0)continue;
-        mp[k-tmp%k]++;
+        mp[v[i]]++;
     }
-    ll mx = -1;
-    for(auto it: mp){
-        ll x = it.first,y = it.second;
-        mx = max(mx, x + (k*(y-1)));
+    for(ll i=0;i<n;i++){
+        if(mp[i]==0)zero.push_back(v[i]);
+        else if(mp[i]==1)one.push_back(v[i]);
+        else two.push_back(v[i]);
     }
-    cout << mx+1 << nl;
+    vector<ll> l ,r;
+    ll cnt=0;
+    for(auto x: two){
+        if(cnt < k){
+            cnt+=2;
+            l.push_back(x),l.push_back(x);
+        }
+    }
+    for(auto x: one){
+        if(cnt < k){
+            cnt+=1;
+            l.push_back(x);
+        }
+    }
+    cnt=0;
+    for(auto x: zero){
+        if(cnt < k){
+            cnt+=2;
+            r.push_back(x),r.push_back(x);
+        }
+    }
+    for(auto x: one){
+        if(cnt < k){
+            cnt+=1;
+            r.push_back(x);
+        }
+    }
+    debug(l,r);
 }
 
 
