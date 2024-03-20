@@ -1,3 +1,8 @@
+//Problem Name : B. Phoenix and Beauty
+//Solver : Codecrasader036
+//Date : 2024-03-20
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//
@@ -58,30 +63,32 @@ typedef unsigned long long int ull;
   #define debug(x...)
 #endif
 
-string problem_name = "\"Seraphim the Owl\"";
+string problem_name = "\"B. Phoenix and Beauty\"";
 
 const ll mod = 100;
 
 
 
 void solve(ll cases=0){
-    ll n,m;
-    cin>>n>>m;
-    vector<ll> a(n),b(n);
-    for(auto &x: a)cin>>x;
-    for(auto &x: b)cin>>x;
-    deque<ll> suffix_sum={0};
-    for(ll i=n-1;i>=0;i--){
-        suffix_sum.push_front(suffix_sum.front()+b[i]);
+    ll n,k;
+    cin>>n>>k;
+    vector<ll> v(n);
+    set<ll> s;
+    for(auto &x: v){
+        cin>>x;
+        s.insert(x);
     }
-    debug(suffix_sum);
-    vector<ll> dp(n,LLONG_MAX);
-    dp[n-1] = a[n-1];
-    for(ll i=n-2;i>=0;i--){
-        dp[i] = min(a[i]+dp[i+1], a[i]+suffix_sum[i+1]);
+    if(s.size()>k){
+        cout << "-1" << nl;
+        return ;
     }
-    debug(dp);
-    cout << *min_element(dp.begin(),dp.begin()+m) << nl;
+    
+    cout << n*k << nl;
+    for(ll i=0;i<n;i++){
+        for (int b:s)cout<<b<<' ';
+        for (int j=0;j<k-(int)s.size();j++)cout<<1<<' ';
+    }
+    cout<<nl;
 }
 
 
