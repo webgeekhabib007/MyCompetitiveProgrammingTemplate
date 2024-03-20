@@ -1,3 +1,8 @@
+//Problem Name : Fireworks
+//Solver : Codecrasader036
+//Date : 2024-03-20
+
+
 
 ////////////////////////////////////////////////////////////////////////
 //OOOOOOOOOOOOOOOOOOOOOOOkxdoollooooooollodkkOOOOOOOOOOOOOOOOOOOOOOOOO//

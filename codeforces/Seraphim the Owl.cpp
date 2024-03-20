@@ -75,18 +75,15 @@ void solve(ll cases=0){
     vector<ll> a(n),b(n);
     for(auto &x: a)cin>>x;
     for(auto &x: b)cin>>x;
-    deque<ll> suffix_sum={0};
-    for(ll i=n-1;i>=0;i--){
-        suffix_sum.push_front(suffix_sum.front()+b[i]);
+    ll ans = LLONG_MAX;
+    ll now = 0;
+    for(ll i=n;i--;){
+        if(i<m)ans = min(ans,now+a[i]);
+        
+        now+= min(a[i],b[i]);
+
     }
-    debug(suffix_sum);
-    vector<ll> dp(n,LLONG_MAX);
-    dp[n-1] = a[n-1];
-    for(ll i=n-2;i>=0;i--){
-        dp[i] = min(a[i]+dp[i+1], a[i]+suffix_sum[i+1]);
-    }
-    debug(dp);
-    cout << *min_element(dp.begin(),dp.begin()+m) << nl;
+    cout << ans << nl;
 }
 
 
