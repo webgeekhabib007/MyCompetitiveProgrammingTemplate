@@ -1,21 +1,27 @@
-import sys
-import datetime, time
+x,n =  map(int,input().split())
 
+primes_fact = []
 
-Problem_name = sys.argv[1]
-date = datetime.date.today()
-Solver = "Codecrasader036"
-site = "codeforces"
-
-
-with open("./main.cpp", "r") as file:
-    prev = f"//Problem Name : {Problem_name}\n//Solver : {Solver}\n//Date : {date}\n\n\n"
-    cat = file.read()
-    cat = prev+ cat
-    with open(f"{site}/{Problem_name}.cpp","w") as output:
-        output.write(cat)
-
-        output.close()
-
-    file.close()
+i=2
+while i*i<= x:
+    if x%i==0:
+        primes_fact.append(i)
+        while x%i==0:
+            x//=i    
+    i+=1
     
+if x>1:
+    primes_fact.append(x)
+mod = 10**9+7
+ans = 1
+for primes in primes_fact:
+    power = 0
+    fact = primes
+    while fact <= n:
+        power+=n//fact
+        fact*=primes
+    
+    ans*= pow(primes,power,mod)
+    ans%=mod
+    
+print(ans)
