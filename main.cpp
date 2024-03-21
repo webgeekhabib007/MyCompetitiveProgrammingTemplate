@@ -61,7 +61,7 @@ typedef unsigned long long int ull;
 
 string problem_name = "\"Primes and Multiplication\"";
 
-const ll mod = 100;
+const ull mod = 1e9+7;
 
 
 
@@ -79,15 +79,26 @@ void solve(ll cases=0){
         v.push_back(x);
     }
     
-    ull ans = 1ULL;
-    for(auto &it : v){
-        ull k = 0;
-        ull fac = it;
-        while(fac <= n){
-            k += (n/fac);
-            fac*= it;
+    function<ull(ull,ull,ull)> binmod = [&](ull n,ull k,ull m)->ull{
+        if(k==0ULL)return 1ULL;
+        if(k==1ULL)return n;
+        if(k%2==0){
+            ull tmp = binmod(n,k/2,mod);
+            return (tmp%mod*tmp%mod)%mod;
         }
-        ans*= (ull)powl(it,k);
+        return (n%mod*binmod(n,k-1,mod)%mod)%mod;
+    };
+
+    ull ans = 1ULL;
+    for(auto primes : v){
+        ull fact = n;
+        ull cnt = 0;
+        while(fact){
+            fact/=primes;
+            cnt+= fact;
+        }
+        ans*= binmod(primes,cnt,mod);
+        ans%=mod;
     }
     debug(v);
     cout << ans << nl;

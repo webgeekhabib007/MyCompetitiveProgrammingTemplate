@@ -1,27 +1,15 @@
-x,n =  map(int,input().split())
-
-primes_fact = []
-
-i=2
-while i*i<= x:
-    if x%i==0:
-        primes_fact.append(i)
-        while x%i==0:
-            x//=i    
-    i+=1
+for _ in range(int(input())):
+    n,m = [int(x) for x in input().split()]
+    a = [int(x) for x in input().split()]
+    b = [int(x) for x in input().split()]
     
-if x>1:
-    primes_fact.append(x)
-mod = 10**9+7
-ans = 1
-for primes in primes_fact:
-    power = 0
-    fact = primes
-    while fact <= n:
-        power+=n//fact
-        fact*=primes
+    ans = 1e18
+    now = 0
     
-    ans*= pow(primes,power,mod)
-    ans%=mod
-    
-print(ans)
+    for i in range(n-1,-1,-1):
+        if i<m :
+            ans = min(ans,now+a[i])
+            
+        now+= min(a[i],b[i])
+            
+    print(ans)
