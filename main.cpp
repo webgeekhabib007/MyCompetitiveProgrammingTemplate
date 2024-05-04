@@ -71,10 +71,21 @@ auto preCompute = [](){
 
 void solve(ll cases=0){
     ll n;cin>>n;
-    string s;cin>>s;
-    ll cnt=0;
-    for(auto x: s)cnt+= (x=='U');
-    cout << (cnt&1 ? "YES" : "NO") << nl;
+    vector<ll> v(n);
+    for(auto &x: v)cin>>x;
+    vector<ll> ans(n,0);
+    ans[0] = (v[0]!=1);
+    for(ll i=1;i<n;i++){
+        for(ll j=i;j>=0;j--){
+            ll g = __gcd(v[i],v[j]);
+            if(g == i-j+1){
+                ans[i] = ans[i-1]+1;
+                v[j]=1;
+                break;
+            }
+        }
+    }
+    cout << ans[n-1] << nl;
 }
 
 
