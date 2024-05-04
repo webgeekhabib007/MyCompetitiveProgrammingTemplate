@@ -75,11 +75,38 @@ auto preCompute = [](){
 
 
 void solve(ll cases=0){
-    ll n;cin>>n;
-    string s;cin>>s;
-    ll cnt=0;
-    for(auto x: s)cnt+= (x=='U');
-    cout << (cnt&1 ? "YES" : "NO") << nl;
+    ll n,q;cin>>n>>q;
+    vector<vector<ll>> graph(n);
+    for(ll i=0;i<n-1;i++){
+        ll a,b;cin>>a>>b;
+        a--,b--;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }
+    ll m ;cin>>m;
+    m--;
+    vector<ll> dis;
+    function<void(ll,ll,ll)> dfs = [&](ll src,ll par,ll level)->void{
+        if(graph[src].size()==1){
+            dis.push_back(level);
+            return ;
+        }
+        level++;
+        for(auto x: graph[src]){
+            if(x!=par){
+                dfs(x,src,level);
+            }
+        }
+    };
+    dfs(m,-1,0);
+    debug(dis);
+    for(auto x: dis){
+        if(x&1){
+            cout << "Ron" << nl;
+            return ;
+        }
+    }
+    cout << "Hermione" << nl;
 }
 
 
@@ -97,7 +124,7 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        #define TEST_CASE
+        //#define TEST_CASE
 
         //preCompute();
 
