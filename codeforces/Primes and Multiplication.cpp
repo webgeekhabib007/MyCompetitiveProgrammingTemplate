@@ -1,6 +1,6 @@
 //Problem Name : Primes and Multiplication
 //Solver : Codecrasader036
-//Date : 2024-03-21
+//Date : 2024-05-04
 
 
 
@@ -69,44 +69,17 @@ string problem_name = "\"Primes and Multiplication\"";
 const ull mod = 1e9+7;
 
 
+auto preCompute = [](){
+    
+};
+
 
 void solve(ll cases=0){
-    ull x,n;
-    cin>>x>>n;
-    vector<ull> v;
-    for(ull i=2;i*i<=x;i++){
-        if(x%i==0){
-            v.push_back(i);
-            while(x%i==0)x/=i;
-        }
-    }
-    if(x>1){
-        v.push_back(x);
-    }
-    
-    function<ull(ull,ull,ull)> binmod = [&](ull n,ull k,ull m)->ull{
-        if(k==0ULL)return 1ULL;
-        if(k==1ULL)return n;
-        if(k%2==0){
-            ull tmp = binmod(n,k/2,mod);
-            return (tmp%mod*tmp%mod)%mod;
-        }
-        return (n%mod*binmod(n,k-1,mod)%mod)%mod;
-    };
-
-    ull ans = 1ULL;
-    for(auto primes : v){
-        ull fact = n;
-        ull cnt = 0;
-        while(fact){
-            fact/=primes;
-            cnt+= fact;
-        }
-        ans*= binmod(primes,cnt,mod);
-        ans%=mod;
-    }
-    debug(v);
-    cout << ans << nl;
+    ll n;cin>>n;
+    string s;cin>>s;
+    ll cnt=0;
+    for(auto x: s)cnt+= (x=='U');
+    cout << (cnt&1 ? "YES" : "NO") << nl;
 }
 
 
@@ -124,9 +97,9 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-       // #define TEST_CASE
+        #define TEST_CASE
 
-        
+        //preCompute();
 
         #ifdef TEST_CASE
             ll test;
