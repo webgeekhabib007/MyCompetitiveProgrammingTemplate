@@ -63,45 +63,41 @@ string problem_name = "\"Primes and Multiplication\"";
 
 const ull mod = 1e9+7;
 
-
+vector<ll> binDec;
+bool is(ll n){
+    while(n){
+        ll rem = n%10;
+        if(rem>1)return false;
+        n/=10;
+    }
+    return true;
+}
 auto preCompute = [](){
-    
+    for(ll i=2;i<=100005;i++){
+        if(is(i)){
+            binDec.push_back(i);
+        }
+    }    
 };
+vector<bool> dp(100005,false);
+
+bool ok(ll n){
+    if(n==1)return true;
+    if(dp[n])return true;
+    bool ans = false;
+    for(auto i : binDec){
+        if(n%i==0){
+            ans|= ok(n/i);
+        }
+    }
+    return dp[n]=ans;
+}
+
 
 
 void solve(ll cases=0){
-    ll n,q;cin>>n>>q;
-    vector<vector<ll>> graph(n);
-    for(ll i=0;i<n-1;i++){
-        ll a,b;cin>>a>>b;
-        a--,b--;
-        graph[a].push_back(b);
-        graph[b].push_back(a);
-    }
-    ll m ;cin>>m;
-    m--;
-    vector<ll> dis;
-    function<void(ll,ll,ll)> dfs = [&](ll src,ll par,ll level)->void{
-        if(graph[src].size()==1){
-            dis.push_back(level);
-            return ;
-        }
-        level++;
-        for(auto x: graph[src]){
-            if(x!=par){
-                dfs(x,src,level);
-            }
-        }
-    };
-    dfs(m,-1,0);
-    debug(dis);
-    for(auto x: dis){
-        if(x&1){
-            cout << "Ron" << nl;
-            return ;
-        }
-    }
-    cout << "Hermione" << nl;
+    ll n;cin>>n;
+    cout << (ok(n)? "YES" : "NO") << endl;
 }
 
 
@@ -119,9 +115,9 @@ int main(int argc, char const *argv[])
         system(cmd.c_str());
     #endif
 
-        //#define TEST_CASE
+        #define TEST_CASE
 
-        //preCompute();
+        preCompute();
 
         #ifdef TEST_CASE
             ll test;
