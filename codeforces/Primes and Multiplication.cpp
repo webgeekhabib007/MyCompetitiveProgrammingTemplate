@@ -1,6 +1,6 @@
 //Problem Name : Primes and Multiplication
 //Solver : Codecrasader036
-//Date : 2024-05-07
+//Date : 2024-05-28
 
 
 
@@ -68,41 +68,58 @@ string problem_name = "\"Primes and Multiplication\"";
 
 const ull mod = 1e9+7;
 
-vector<ll> binDec;
-bool is(ll n){
-    while(n){
-        ll rem = n%10;
-        if(rem>1)return false;
-        n/=10;
-    }
-    return true;
-}
+
 auto preCompute = [](){
-    for(ll i=2;i<=100005;i++){
-        if(is(i)){
-            binDec.push_back(i);
-        }
-    }    
+    
 };
-vector<bool> dp(100005,false);
-
-bool ok(ll n){
-    if(n==1)return true;
-    if(dp[n])return true;
-    bool ans = false;
-    for(auto i : binDec){
-        if(n%i==0){
-            ans|= ok(n/i);
-        }
-    }
-    return dp[n]=ans;
-}
-
-
 
 void solve(ll cases=0){
     ll n;cin>>n;
-    cout << (ok(n)? "YES" : "NO") << endl;
+    vector<ll> a(n,0);
+    for(auto &x: a)cin>>x;
+    ll ans=0;
+    sort(all(a));
+    map<ll,ll> m;
+    for(auto it:a){
+        m[it]++;
+    }
+    vector<ll> v;
+    for(auto it:m){
+        v.push_back(it.first);
+    }
+  
+ 
+    for(ll i=v.size()-1;i>=0;i--){
+        ll cur=v[i];
+        ll len=m[cur];
+        ll f=0;
+        for(int j=i-1;j>=0;j--){
+            int lc= cur*v[j];
+            lc=lc/__gcd(cur,v[j]);
+            
+            if(lc>v.back()){
+                f=1;
+                len=n;break;
+            }
+            if(m[lc]>0 and lc!=cur){continue;}
+            len=len+m[v[j]];
+            cur=lc;
+            if(m.find(cur)==m.end()){
+                ans=max(ans,len);
+            }
+            
+            
+        }
+        if(f){
+            ans=n;break;
+        }
+        // cout<<i<<" "<<len<<endl;
+        if(len==1){continue;}
+        if(m[cur]>0){continue;}
+        ans=max(ans,len);
+        if(ans==n){break;}
+    }
+    cout<<ans<<endl;
 }
 
 
