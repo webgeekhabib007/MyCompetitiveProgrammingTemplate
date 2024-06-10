@@ -68,51 +68,13 @@ struct custom_hash {
 
 
 void solve(ll cases=0){
-    ll n,k,pa,pb;cin>>n>>k>>pa>>pb;
-    vector<ll> p(n),v(n);
-    for(auto &x: p)cin>>x;
-    for(auto &x: v)cin>>x;
-    auto getPath = [&](ll pos)->vector<ll>{
-        vector<ll> path = {pos};
-        for(ll i=1;i<n;i++){
-            path.push_back(p[pos-1]);
-            pos = p[pos-1];
-        }
-        return path;
-    };
-    vector<ll> path_a = getPath(pa), path_b = getPath(pb);
-    debug(path_a,path_b);
-    auto getValueAlongPath = [&](vector<ll>& path)->vector<ll>{
-        vector<ll> val;
-        for(auto x: path){
-            val.push_back(v[x-1]);
-        }
-        return val;
-    };
-    vector<ll> val1 = getValueAlongPath(path_a),val2 = getValueAlongPath(path_b);
-    debug(val1,val2);
-    auto getTotal = [&](vector<ll> val)->ll{
-        if(k>=n){
-            ll sum = 0;
-            ll mx_sum = 0;
-            for(ll i=0;i<n;i++){
-                mx_sum = max(mx_sum,sum + val[i]*(k-i));
-                sum+=val[i];
-            }
-            return mx_sum;
-        }else{
-            ll sum = 0;
-            ll mx_sum = 0;
-            for(ll i=0;i<k;i++){
-                mx_sum = max(mx_sum,sum + val[i]*(k-i));
-                sum+=val[i];
-            }
-            return mx_sum;
-        }
-    };
-    ll a = getTotal(val1), b = getTotal(val2);
-    debug(a,b);
-    cout << (a==b? "Draw" : a>b ? "Bodya" : "Sasha") << nl;
+    ll n;cin>>n;
+    vector<ll> v(n);for(auto &x: v)cin>>x;
+    ll ans = 0;
+    for(ll i=0;i<n-1;i++){
+        ans = max(ans,min(v[i],v[i+1]));
+    }
+    cout << ans << nl;
 }
 
 
