@@ -1,89 +1,89 @@
-#include <vector>
-#include <climits>
-
-class SegmentTreeMin {
-private:
-    std::vector<int> tree;
-    std::vector<int> lazy;
-    int n;
-
-    void buildTree(std::vector<int>& arr, int start, int end, int treeNode) {
-        if (start == end) {
-            tree[treeNode] = arr[start];
-            return;
+template<typename T>
+class SegmentTree{
+    vector<T> tree;
+    vector<T> lazy;
+    ll n;
+    void build(ll node,vector<T>& arr,ll start,ll end){
+        if(start == end){
+            tree[node] = arr[start];
         }
-        int mid = (start + end) / 2;
-        buildTree(arr, start, mid, 2 * treeNode);
-        buildTree(arr, mid + 1, end, 2 * treeNode + 1);
-        tree[treeNode] = std::min(tree[2 * treeNode], tree[2 * treeNode + 1]);
+        else{
+            ll mid = start + (end-start)/2;
+            build(node*2,arr,start,mid);
+            build(node*2+1,arr,mid+1,end);
+            tree[node] = tree[node*2] + tree[node*2+1];
+        }
+    }
+    void update(int idx,T val,ll node,ll start,ll end){
+        if(start == end){
+            tree[node] = val;
+        }else{
+            ll mid = start + (end - start)/2;
+            if(idx <= mid){
+                update(idx,val,node*2,start,mid);
+            }else{
+                update(idx,val,node*2+1,mid+1,end);
+            }
+            tree[node] = tree[node*2] + tree[node*2+1];
+        }
     }
 
-    void updateTree(int left, int right, int start, int end, int treeNode, int value) {
-        if (lazy[treeNode] != 0) {
-            tree[treeNode] += lazy[treeNode];
-            if (start != end) {
-                lazy[2 * treeNode] += lazy[treeNode];
-                lazy[2 * treeNode + 1] += lazy[treeNode];
+    void updateRange(ll left,ll right,T val,ll node,ll start,ll end){
+        if(lazy[node]){
+            tree[node] += (end-start+1)*lazy[node];
+            if(start!=end){
+                lazy[node*2] += lazy[node];
+                lazy[node*2+1] += lazy[node];
             }
-            lazy[treeNode] = 0;
+            lazy[node] = 0;
         }
-        // No overlap
-        if (start > right || end < left) {
-            return;
-        }
-        // Complete overlap
-        if (start >= left && end <= right) {
-            tree[treeNode] += value;
-            if (start != end) {
-                lazy[2 * treeNode] += value;
-                lazy[2 * treeNode + 1] += value;
+        if(start > right or end < left)return ;
+        if(start >= left and end <= right){
+            tree[node] += (end-start+1)*val;
+            if(start!=end){
+                lazy[node*2] += val;
+                lazy[node*2+1] += val;
             }
-            return;
+            return ;
         }
-        // Partial overlap
-        int mid = (start + end) / 2;
-        updateTree(left, right, start, mid, 2 * treeNode, value);
-        updateTree(left, right, mid + 1, end, 2 * treeNode + 1, value);
-        tree[treeNode] = std::min(tree[2 * treeNode], tree[2 * treeNode + 1]);
+        int mid = start + (end-start)/2;
+        updateRange(left,right,val,node*2,start,mid);
+        updateRange(left,right,val,node*2+1,mid+1,end);
+        tree[node] = tree[node*2] + tree[node*2+1];
     }
 
-    int queryTree(int left, int right, int start, int end, int treeNode) {
-        if (lazy[treeNode] != 0) {
-            tree[treeNode] += lazy[treeNode];
-            if (start != end) {
-                lazy[2 * treeNode] += lazy[treeNode];
-                lazy[2 * treeNode + 1] += lazy[treeNode];
+    T query(ll left,ll right,ll node,ll start, ll end){
+        if(start > right or end < left)return 0;
+        if(lazy[node]){
+            tree[node] += (end-start+1)*lazy[node];
+            if(start!=end){
+                lazy[node*2] += lazy[node];
+                lazy[node*2+1] += lazy[node];
             }
-            lazy[treeNode] = 0;
+            lazy[node] = 0;
         }
-        // No overlap
-        if (start > right || end < left) {
-            return INT_MAX;
+        if(start>=left and end <= right){
+            return tree[node];
         }
-        // Complete overlap
-        if (start >= left && end <= right) {
-            return tree[treeNode];
-        }
-        // Partial overlap
-        int mid = (start + end) / 2;
-        int ans1 = queryTree(left, right, start, mid, 2 * treeNode);
-        int ans2 = queryTree(left, right, mid + 1, end, 2 * treeNode + 1);
-        return std::min(ans1, ans2);
+        ll mid = start + (end - start)/2;
+        T leftSum = query(left,right,node*2,start,mid);
+        T rightSum = query(left,right,node*2+1,mid+1,end);
+        return leftSum+rightSum;
     }
-
 public:
-    SegmentTreeMin(std::vector<int>& arr) {
+    SegmentTree(vector<T>& arr){
         n = arr.size();
-        tree.assign(4 * n, 0);
-        lazy.assign(4 * n, 0);
-        buildTree(arr, 0, n - 1, 1);
+        tree.resize(4*n+1);
+        lazy.resize(4*n+1,0);
+        build(1,arr,0,n-1);
     }
-
-    void update(int left, int right, int value) {
-        updateTree(left, right, 0, n - 1, 1, value);
+    void updateAt(ll idx,T val){
+        update(idx,val,1,0,n-1);
     }
-
-    int query(int left, int right) {
-        return queryTree(left, right, 0, n - 1, 1);
+    T sumRange(ll l,ll r){
+        return query(l,r,1,0,n-1);
+    }
+    void updateRange(ll left,ll right,T val){
+        updateRange(left,right,val,1,0,n-1);
     }
 };

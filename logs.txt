@@ -1,0 +1,2 @@
+g++ main.cpp -o App 
+makefile:2: recipe for target 'App' failed

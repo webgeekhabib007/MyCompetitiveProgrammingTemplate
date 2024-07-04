@@ -1,111 +1,53 @@
-
-#include <vector>
-#include <algorithm>
-#include <map>
-
-using namespace std;
-
-class FenwickTreeSum {
-private:
-    vector<int> tree;
+template<typename T>
+class BIT {
 public:
-    FenwickTreeSum(int size) : tree(size + 1, 0) {}
-
-    void update(int idx, int val) {
-        while (idx < tree.size()) {
-            tree[idx] += val;
-            idx += idx & -idx; // Update the next node
+    vector<T> bit;
+    int n;
+    BIT(int n) : n(n) {
+        bit.assign(n + 1, 0);
+    }
+    BIT(const vector<T>& values) : n(values.size()) {
+        bit.assign(n + 1, 0);
+        for (ll i = 0; i < n; ++i) {
+            update(i + 1, values[i]);
         }
     }
-
-    int query(int idx) {
-        int sum = 0;
+    void update(ll idx, T val) {
+        while (idx <= n) {
+            bit[idx] += val;
+            idx += idx & -idx;
+        }
+    }
+    T prefixSum(ll idx) const {
+        T sum = 0;
         while (idx > 0) {
-            sum += tree[idx];
-            idx -= idx & -idx; // Move to the parent node
+            sum += bit[idx];
+            idx -= idx & -idx;
         }
         return sum;
     }
 };
 
-//fenwick tree for max range query
-
-#include <vector>
-#include <climits>
-
-class FenwickTreeMax {
-private:
-    std::vector<int> tree;
-    std::vector<int> maxArray;
+template<typename T>
+class RangeUpdateBIT {
+public:
+    BIT<T> BIT1, BIT2;
     int n;
 
-public:
-    FenwickTreeMax(std::vector<int>& arr) {
-        n = arr.size();
-        tree.assign(n + 1, 0);
-        maxArray.assign(n + 1, INT_MIN);
+    RangeUpdateBIT(int n) : n(n), BIT1(n), BIT2(n) {}
 
-        for (int i = 0; i < n; i++) {
-            update(i, arr[i]);
-        }
+    void rangeUpdate(ll l, ll r, T val) {
+        BIT1.update(l, val);
+        BIT1.update(r + 1, -val);
+        BIT2.update(l, val * (l - 1));
+        BIT2.update(r + 1, -val * r);
     }
 
-    void update(int idx, int value) {
-        while (idx < n) {
-            maxArray[idx + 1] = std::max(maxArray[idx + 1], value);
-            idx += (idx & -idx);
-        }
+    T pointQuery(ll idx) const {
+        return BIT1.prefixSum(idx) * idx - BIT2.prefixSum(idx);
     }
 
-    int query(int idx) {
-        int maxVal = INT_MIN;
-        while (idx > 0) {
-            maxVal = std::max(maxVal, maxArray[idx]);
-            idx -= (idx & -idx);
-        }
-        return maxVal;
+    T rangeQuery(ll l, ll r) const {
+        return pointQuery(r) - pointQuery(l - 1);
     }
 };
-
-// minimum range query
-#include <vector>
-#include <climits>
-
-class FenwickTreeMin {
-private:
-    std::vector<int> tree;
-    std::vector<int> minArray;
-    int n;
-
-public:
-    FenwickTreeMin(std::vector<int>& arr) {
-        n = arr.size();
-        tree.assign(n + 1, INT_MAX);
-        minArray.assign(n + 1, INT_MAX);
-
-        for (int i = 0; i < n; i++) {
-            update(i, arr[i]);
-        }
-    }
-
-    void update(int idx, int value) {
-        while (idx < n) {
-            minArray[idx + 1] = std::min(minArray[idx + 1], value);
-            idx += (idx & -idx);
-        }
-    }
-
-    int query(int idx) {
-        int minVal = INT_MAX;
-        while (idx > 0) {
-            minVal = std::min(minVal, minArray[idx]);
-            idx -= (idx & -idx);
-        }
-        return minVal;
-    }
-};
-
-int main() {
-    
-    return 0;
-}

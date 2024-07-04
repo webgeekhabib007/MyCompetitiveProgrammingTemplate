@@ -1,3 +1,3 @@
 App: main.cpp debug.h
-	g++ main.cpp -o App
+	mingw32-g++ main.cpp -o App 
 	.\App.exe
