@@ -65,12 +65,18 @@ void seive(){
 
 const ll mod = 1e9+7;
 void solve(ll test_case = 0) {
-    ll a,b;cin>>a>>b;
-    if((a+b)%2 or a-b<0){
-        cout << "NO" << nl;
-        return ;
+    ll n,k;cin>>n>>k;
+    vector<ll> v(n-1);
+    for(auto x: v)cin>>x;
+    ll pos=0;
+    while(pos<n-1){
+        if(pos == k-1){
+            cout << "YES" << nl;
+            return ;
+        }
+        pos = v[pos]+pos;
     }
-    cout << "YES" << nl;
+    cout << "NO" << nl;
 }
 
 int main(int argc, char const *argv[])
