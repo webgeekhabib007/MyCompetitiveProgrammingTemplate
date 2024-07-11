@@ -6,7 +6,6 @@
 #include <ext/pb_ds/tree_policy.hpp>
 #include <bits/stdc++.h>
 
-
 using namespace __gnu_pbds;
 using namespace std;
 
@@ -30,14 +29,13 @@ struct custom_hash {
         x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
         return x ^ (x >> 31);
     }
-
     size_t operator()(uint64_t x) const {
         static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-
-typedef tree<ll,null_type,less<ll>,rb_tree_tag,tree_order_statistics_node_update> order_set;
+template<typename T>
+using order_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update> ;
 
 ll power(ll base,ll n,ll mod){
     if(n==0)return 1LL;
@@ -47,36 +45,26 @@ ll power(ll base,ll n,ll mod){
     return (tmp*tmp)%mod;
 }
 
-bitset<4000> bs;
+const ll upper_limit = 1e6;
+bitset<upper_limit> bs;
 vector<ll> prime;
 void seive(){
     bs.set();
     bs[0]=0,bs[1]=0;
-    for(ll i=4;i<=4000;i+=2)bs[i]=0;
-    for(ll i=3;i*i<=4000;i++){
+    for(ll i=4;i<=upper_limit;i+=2)bs[i]=0;
+    for(ll i=3;i*i<=upper_limit;i++){
         if(bs[i]){
-            for(ll j=i+i;j<=4000;j+=i)bs[j]=0;
+            for(ll j=i+i;j<=upper_limit;j+=i)bs[j]=0;
         }
     }
-    for(ll i=2;i<=4000;i++){
+    for(ll i=2;i<=upper_limit;i++){
         if(bs[i])prime.push_back(i);
     }
 }
 
 const ll mod = 1e9+7;
 void solve(ll test_case = 0) {
-    ll n,k;cin>>n>>k;
-    vector<ll> v(n-1);
-    for(auto x: v)cin>>x;
-    ll pos=0;
-    while(pos<n-1){
-        if(pos == k-1){
-            cout << "YES" << nl;
-            return ;
-        }
-        pos = v[pos]+pos;
-    }
-    cout << "NO" << nl;
+    cout << power(2,32,mod) << nl;
 }
 
 int main(int argc, char const *argv[])
@@ -89,7 +77,7 @@ int main(int argc, char const *argv[])
         //freopen("error.txt", "w", stderr);
     #endif
 
-    #define TEST_CASE
+    //#define TEST_CASE
 
     #ifdef TEST_CASE
         ll test;
