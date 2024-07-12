@@ -34,8 +34,8 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-template<typename T>
-using order_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update> ;
+template<typename T,typename sortBy=less<T> >
+using order_set = tree<T,null_type,sortBy,rb_tree_tag,tree_order_statistics_node_update> ;
 
 ll power(ll base,ll n,ll mod){
     if(n==0)return 1LL;
@@ -62,9 +62,27 @@ void seive(){
     }
 }
 
+
 const ll mod = 1e9+7;
+
+map<ll,ll> mp;
 void solve(ll test_case = 0) {
-    cout << power(2,32,mod) << nl;
+    ll n;cin>>n;
+    vector<ll> v = {1,3,6,10,15};
+    mp[0]=0;
+    for(auto x: v)mp[x]=1;
+    function<void(ll)> get = [&](ll n)->void{
+        if(n<0)return;
+        if(mp.find(n)!=mp.end())return mp[n];
+        ll ans = LLONG_MAX;
+        for(auto x : v){
+            get(n-x);
+            ans = min({ans,mp[n-x]+1});
+        }
+        return mp[n]=ans;
+    };
+    get(n);
+    cout << mp[n] << nl;
 }
 
 int main(int argc, char const *argv[])
