@@ -63,32 +63,42 @@ void seive(){
 }
 
 
-const ll mod = 1e9+7;
-
-map<ll,ll> mp;
+const ll mod = 1e6+7;
+vector<ll> d(mod,0);
+void precompute(){
+    for(ll i=1;i<=mod;i++){
+        for(ll j=i;j<=mod;j+=i)d[j]++;
+    }
+}
+const ll inf = 1e16;
 void solve(ll test_case = 0) {
-    ll n;cin>>n;
-    vector<ll> v = {1,3,6,10,15};
-    mp[0]=0;
-    for(auto x: v)mp[x]=1;
-    function<void(ll)> get = [&](ll n)->void{
-        if(n<0)return;
-        if(mp.find(n)!=mp.end())return mp[n];
-        ll ans = LLONG_MAX;
-        for(auto x : v){
-            get(n-x);
-            ans = min({ans,mp[n-x]+1});
-        }
-        return mp[n]=ans;
+    ull n,x,y;cin>>n>>x>>y;
+    if(n==1){
+        cout << min(x,y) << nl;
+        return ;
+    }
+    auto f = [&](ull time)->bool{
+        if(time<min(x,y))return false;
+        return (time/x)+(time/y) >= n-1;
     };
-    get(n);
-    cout << mp[n] << nl;
+    ull left = 0,right = inf;
+    ull ans = -1;
+    while(left<=right){
+        ull mid = (left+right)/2;
+        if(f(mid)){
+            ans = mid;
+            right = mid-1;
+        }else left = mid+1;
+    }
+    cout << ans+min(x,y) << nl;
 }
 
 int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
+    auto begin = chrono::high_resolution_clock::now();
+    //precompute();
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);
         freopen("output.txt", "w", stdout);
@@ -106,6 +116,7 @@ int main(int argc, char const *argv[])
         solve();
 
     #endif
-
+    auto end = chrono::high_resolution_clock::now();
+    cerr << "Time elapsed : " << chrono::duration_cast<chrono::milliseconds>(end-begin).count() << " ms."<< endl;
     return 0;
 }
