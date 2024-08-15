@@ -34,9 +34,6 @@ struct custom_hash {
         static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
         return splitmix64(x + FIXED_RANDOM);
     }
-    size_t operator()(pair<ll,ll> x) const {
-        return x.first*31 + x.second*31*31;
-    }
 };
 template<typename T,typename sortBy=less<T> >
 using order_set = tree<T,null_type,sortBy,rb_tree_tag,tree_order_statistics_node_update> ;
@@ -51,52 +48,49 @@ ll power(ll base,ll n,ll mod){
 
 
 const ll mod = 1e9+7;
-const ll N = 1e7 + 10;
-ll grundy[N];
-
-void pre() {
-    memset(grundy, -1, sizeof grundy);
-    grundy[0] = 0;
-    grundy[1] = 1;
-
-    ll cnt = 0;
-    for (ll i = 2; i < N; i++) {
-        if (grundy[i] == -1) {
-            cnt++;
-            if (i == 2) cnt = 0;
-            if (i == 3) cnt = 2;
-            for (ll j = i; j < N; j += i) {
-                if (grundy[j] == -1) grundy[j] = cnt;
-            }
-        }
-        if (grundy[i] == -1) {
-            cnt++;
-        }
+class Node{
+    public:
+    ll u,v,w;
+    Node(){};
+    Node(ll _u,ll _v,ll _w): u(_u),v(_v),w(_w){};
+    operator<(Node &other){
+        if(w != other.w)return w < other.w;
+        if(u != other.u)return u < other.u;
+        return v < other.v;
     }
-}
-
-void solve(ll test_cases=0) {
-    ll n,k;cin>>n>>k;
-    string s;cin>>s;
-    auto get = [&](string p)->ll{
-        ll len = p.size();
-        ll mn = LLONG_MAX;
-        for(ll i=1;i<len/2;i++){
-            if(i%2==0){
-                ll cnt = len/i;
-                string tmp = "";
-                for(ll j=0;j<cnt;i++){
-                    tmp+= p.substr(i*j,i*(j+1));
-                }
-                ll cmp_len = 0;
-                for(ll j=0;j<cnt;j+=2){
-                    string s1 = tmp.substr(0,i);
-                    string s2 = tmp.substr(i,2*i);
-                }
-            }
+};
+void solve(ll test_case = 0) {
+    ll n,m;cin>>n>>m;
+    vector<Node> arr;
+    for(ll i=0;i<m;i++){
+        ll u,v,w;cin>>u>>v>>w;
+        arr.push_back(Node(u,v,w));
+    }
+    sort(all(arr));
+    vector<ll> parent(n),rank(n,1);
+    iota(all(parent),0);
+    function<ll(ll)> findSet = [&](ll v)->ll{
+        if(v==parent[v])return v;
+        return parent[v] = findSet(parent[v]);
+    };
+    auto unionSet = [&](ll a,ll b)->void{
+        a = findSet(a),b = findSet(b);
+        if(a!=b){
+            if(rank[a]<rank[b])swap(a,b);
+            parent[b] = a;
+            rank[a]+= rank[b];
         }
     };
+    ll ans = 0;
+    for(auto x: arr){
+        if(findSet(x.u) != findSet(x.v)){
+            unionSet(x.u,x.v);
+            ans+= x.w;
+        }
+    }
+    cout << ans << nl;
 }
+
 int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
@@ -126,3 +120,14 @@ int main(int argc, char const *argv[])
          << nl;
     return 0;
 }
+
+//input
+// 4 6
+// 0 1 1
+// 1 3 3 
+// 3 2 4
+// 2 0 2
+// 0 3 2
+// 1 2 2
+// output:
+//5

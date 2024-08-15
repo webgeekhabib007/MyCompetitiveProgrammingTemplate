@@ -1,29 +1,42 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-namespace cp{
-    typedef long long int ll;
-    #define nl "\n"
-    class Solve{
-        public:
-        Solve(){}
+#define ll long long
+const ll N = 1e7 + 10;
+ll grundy[N];
 
-        void solveWithTest(ll cases){
-            cout << "Case no: " << cases << nl;
-            preprecess();
+void solve() {
+    memset(grundy, -1, sizeof grundy);
+    grundy[0] = 0;
+    grundy[1] = 1;
+
+    ll cnt = 0;
+    for (ll i = 2; i < N; i++) {
+        if (grundy[i] == -1) {
+            cnt++;
+            if (i == 2) cnt = 0;
+            if (i == 3) cnt = 2;
+            for (ll j = i; j < N; j += i) {
+                if (grundy[j] == -1) grundy[j] = cnt;
+            }
         }
-
-        void preprecess(){
-            cout << "fuck first";
+        if (grundy[i] == -1) {
+            cnt++;
         }
-
-    };
+    }
 }
 
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
 
-int main(int argc, char const *argv[])
-{
-    cp::Solve solve;
-    solve.solveWithTest(3);
+    solve();
+
+    ll t;
+    cin >> t;
+    while (t--) {
+        
+    }
+
     return 0;
 }
