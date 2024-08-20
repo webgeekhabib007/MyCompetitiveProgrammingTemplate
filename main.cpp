@@ -51,51 +51,19 @@ ll power(ll base,ll n,ll mod){
 
 
 const ll mod = 1e9+7;
-const ll N = 1e7 + 10;
-ll grundy[N];
 
-void pre() {
-    memset(grundy, -1, sizeof grundy);
-    grundy[0] = 0;
-    grundy[1] = 1;
-
-    ll cnt = 0;
-    for (ll i = 2; i < N; i++) {
-        if (grundy[i] == -1) {
-            cnt++;
-            if (i == 2) cnt = 0;
-            if (i == 3) cnt = 2;
-            for (ll j = i; j < N; j += i) {
-                if (grundy[j] == -1) grundy[j] = cnt;
-            }
-        }
-        if (grundy[i] == -1) {
-            cnt++;
-        }
-    }
-}
 
 void solve(ll test_cases=0) {
-    ll n,k;cin>>n>>k;
-    string s;cin>>s;
-    auto get = [&](string p)->ll{
-        ll len = p.size();
-        ll mn = LLONG_MAX;
-        for(ll i=1;i<len/2;i++){
-            if(i%2==0){
-                ll cnt = len/i;
-                string tmp = "";
-                for(ll j=0;j<cnt;i++){
-                    tmp+= p.substr(i*j,i*(j+1));
-                }
-                ll cmp_len = 0;
-                for(ll j=0;j<cnt;j+=2){
-                    string s1 = tmp.substr(0,i);
-                    string s2 = tmp.substr(i,2*i);
-                }
-            }
-        }
-    };
+    ll n;cin>>n;
+    vector<ll> v(n);
+    map<ll,ll> mp;
+    ll mx = 0;
+    for(auto &x : v){
+        cin>>x;
+        mp[x]++;
+        mx = max(mx,mp[x]);
+    }
+    cout << n-mx << nl;
 }
 int main(int argc, char const *argv[])
 {
@@ -108,7 +76,7 @@ int main(int argc, char const *argv[])
         //freopen("error.txt", "w", stderr);
     #endif
 
-    //#define TEST_CASE
+    #define TEST_CASE
 
     #ifdef TEST_CASE
         ll test;
