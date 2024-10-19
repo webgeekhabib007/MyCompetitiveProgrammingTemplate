@@ -1,123 +1,108 @@
-#include <iostream>
-#include <string>
-#include <unordered_map>
-#include <vector>
-#include <algorithm>
-#include <limits>
+#pragma GCC optimize("O3")
+#pragma GCC target("avx2")
+#pragma GCC optimize("Ofast")
 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <bits/stdc++.h>
+
+
+using namespace __gnu_pbds;
 using namespace std;
 
-int main() {
-    int n_tests;
-    cin >> n_tests;
+typedef long long int ll;
+typedef unsigned long long int ull;
 
-    while (n_tests--) {
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
+#define nl "\n"
+#define all(v) (v).begin(),(v).end()
+#define rall(v) (v).rbegin(),(v).rend()
 
-        if (n % 2 == 0) {
-            unordered_map<char, int> even_counter, odd_counter;
+#ifndef ONLINE_JUDGE
+    #include "debug.h"
+#else
+  #define debug(x...)
+#endif
 
-            for (int i = 0; i < s.length(); i++) {
-                if (i % 2 == 0) {
-                    even_counter[s[i]]++;
-                } else {
-                    odd_counter[s[i]]++;
-                }
-            }
+struct custom_hash {
+    static uint64_t splitmix64(uint64_t x) {
+        x += 0x9e3779b97f4a7c15;
+        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+        return x ^ (x >> 31);
+    }
+    size_t operator()(uint64_t x) const {
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        return splitmix64(x + FIXED_RANDOM);
+    }
+    size_t operator()(pair<ll,ll> x) const {
+        return x.first*31 + x.second*31*31;
+    }
+};
+template<typename T,typename sortBy=less<T> >
+using order_set = tree<T,null_type,sortBy,rb_tree_tag,tree_order_statistics_node_update> ;
 
-            char even_max_char = '\0';
-            int even_max_count = 0;
-            for (const auto& pair : even_counter) {
-                if (pair.second > even_max_count) {
-                    even_max_count = pair.second;
-                    even_max_char = pair.first;
-                }
-            }
+ll power(ll base,ll n,ll mod){
+    if(n==0)return 1LL;
+    if(n==1)return base;
+    if(n&1)return (base%mod*power(base,n-1,mod)%mod)%mod;
+    ll tmp = power(base,n/2,mod)%mod;
+    return (tmp*tmp)%mod;
+}
 
-            char odd_max_char = '\0';
-            int odd_max_count = 0;
-            for (const auto& pair : odd_counter) {
-                if (pair.second > odd_max_count) {
-                    odd_max_count = pair.second;
-                    odd_max_char = pair.first;
-                }
-            }
+ll modinv(ll base,ll mod){
+    return power(base,mod-2,mod);
+}
 
-            int result = (n / 2 - even_max_count) + (n / 2 - odd_max_count);
-            cout << result << endl;
-        } else {
-            if (n == 1) {
-                cout << 1 << endl;
-                continue;
-            }
+const ll mod = 1e9+7;
+void solve(ll cases=0){
+    ll n,q;cin>>n>>q;
+    vector<ll> v(n);
+    for(auto&x : v)cin>>x;
+    unordered_map<ll,ll,> mp;
+    for(ll i=1;i<=n;i++){
+        ll tmp = (i-1)*(n-i+1) + (n-i);
+        mp[tmp]++;
+        if(i<n){
+            ll dif = (v[i] - v[i-1])-1;
 
-            int best = numeric_limits<int>::max();
-            unordered_map<char, int> even_counter, odd_counter;
-
-            for (int i = 0; i < n - 1; i++) {
-                if (i % 2 == 0) {
-                    even_counter[s[i]]++;
-                } else {
-                    odd_counter[s[i]]++;
-                }
-            }
-
-            unordered_map<char, int> even_counter_after, odd_counter_after;
-
-            int even_max_count = 0;
-            for (const auto& pair : even_counter) {
-                even_max_count = max(even_max_count, pair.second);
-            }
-
-            int odd_max_count = 0;
-            for (const auto& pair : odd_counter) {
-                odd_max_count = max(odd_max_count, pair.second);
-            }
-
-            best = min(best, (n / 2 - even_max_count) + (n / 2 - odd_max_count));
-
-            for (int i = n - 2; i >= 0; i--) {
-                if (i % 2 == 0) {
-                    even_counter[s[i]]--;
-                    even_counter_after[s[i + 1]]++;
-                } else {
-                    odd_counter[s[i]]--;
-                    odd_counter_after[s[i + 1]]++;
-                }
-            }
-
-            unordered_map<char, int> even_counter_merged = even_counter;
-            for (const auto& pair : even_counter_after) {
-                even_counter_merged[pair.first] += pair.second;
-            }
-
-            unordered_map<char, int> odd_counter_merged = odd_counter;
-            for (const auto& pair : odd_counter_after) {
-                odd_counter_merged[pair.first] += pair.second;
-            }
-
-            even_max_count = 0;
-            for (const auto& pair : even_counter_merged) {
-                even_max_count = max(even_max_count, pair.second);
-            }
-
-            odd_max_count = 0;
-            for (const auto& pair : odd_counter_merged) {
-                odd_max_count = max(odd_max_count, pair.second);
-            }
-
-            best = min(best, (n / 2 - even_max_count) + (n / 2 - odd_max_count));
-
-            if (n < 2) {
-                cout << best + 2 << endl;
-            } else {
-                cout << best + 1 << endl;
+            if(dif>0){
+                tmp = i*(n-i);
+                mp[tmp]+= dif;
             }
         }
     }
+    while(q--){
+        ll inp;cin>>inp;
+        cout << mp[inp] << " ";
+    }cout << nl;
+}
 
+int main(int argc, char const *argv[])
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+
+    auto begin = chrono::high_resolution_clock::now();
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+        //freopen("error.txt", "w", stderr);
+    #endif
+
+    #define TEST_CASE
+
+    #ifdef TEST_CASE
+        ll test;
+        cin >> test;
+        for (ll cases = 0; cases < test; cases++)
+            solve(cases);
+    #else 
+        solve();
+
+    #endif
+    auto end = chrono::high_resolution_clock::now();
+    cerr << "--->>  Time elapsed : " 
+         << chrono::duration_cast<chrono::milliseconds>(end-begin).count() 
+         << " ms.  <<---" 
+         << nl;
     return 0;
 }

@@ -1,21 +1,20 @@
-10
-1
-a
-2
-ca
 3
-aab
+5 3
+1 4 2 5 3
+RLRLL
+2
+4
+3
+8 5
+1 5 2 4 8 3 6 7
+RRLLRRRL
+4
+3
 5
-ababa
-6
-acdada
-9
-ejibmyyju
-6
-bbccbc
-6
-abacba
+3
+4
+6 2
+1 2 3 4 5 6
+RLRLRL
+4
 5
-bcbca
-5
-dcbdb
