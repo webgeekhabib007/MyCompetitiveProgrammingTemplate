@@ -29,6 +29,7 @@
         "ddddddddo",
         "ddddddllddddddl",
         "ddddo",
+        "divs",
         "Fenwick",
         "lddc",
         "lddddddddc",
@@ -47,6 +48,7 @@
         "ldddddo",
         "lddddl",
         "lddl",
+        "modinv",
         "oddddddd",
         "odddddddddddddddddddddddddc",
         "odddddddddddddddddddddddddddddddddddddddddddddddddc",
@@ -65,6 +67,7 @@
         "oddl",
         "oddoloddddo",
         "oddxdl",
+        "Ofast",
         "Okdc",
         "Okkd",
         "Okkdc",
@@ -76,7 +79,9 @@
         "Okxdc",
         "Okxdlc",
         "Okxl",
-        "Okxo"
+        "Okxo",
+        "pbds",
+        "splitmix"
     ],
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {

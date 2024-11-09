@@ -56,36 +56,52 @@ ll modinv(ll base, ll mod) {
 const ll mod = 998244353;
 
 void solve(ll cases=0) {
-    ll n;cin >> n;
-    vector<ll> idx, res(n, 0);
-    bool zero_found = false
-    auto q = [](ll a, ll b) {
-        cout << "? " << a << " " << b << endl;
-        cout.flush();
-        ll r;cin >> r;
-        return r;
-    };
+    ll n,m;cin>>n>>m;
+    vector<set<ll>>adj(n + 1);
+    vector<bool> vis(n + 1, 0);
 
-    for (ll i = 2; i < n; ++i) {
-        if (!zero_found) {
-            ll r = q(i, 1);
-            if (r == -1) return 0;
-            idx.push_back(i);
-            if(r == 0)zero_found = true,res[i] = 1;
-        } else {
-            for (ll x : idx) {
-                ll r = q(i, x);
-                if (r == 0) {
-                    res[i] = x,idx.push_back(i);
-                    break;
-                }
+    auto is = [&](ll u, ll v) -> bool {
+        return adj[u].find(v)!= adj[u].end();
+    };
+    for (ll i = 1; i <= m; i++) {
+        ll u,v;cin>>u>>v;
+        adj[u].insert(v), adj[v].insert(u);
+    }
+
+    vector<tuple<ll, ll, ll>> ans;
+    for (ll i = 1; i <= n; i++) {
+        while (adj[i].size() > 1) {
+            ll u = *adj[i].begin(); adj[i].erase(u);
+            ll v = *adj[i].begin(); adj[i].erase(v);
+            ans.push_back({u, v, i});
+            adj[u].erase(i); adj[v].erase(i);
+            if (is(u, v))adj[u].erase(v), adj[v].erase(u);
+            else adj[u].insert(v), adj[v].insert(u);
+        }
+    }
+    ll u = 0, v = 0;
+    for (ll i = 1; i <= n; i++) {
+        if (adj[i].size() == 1) {
+            u = i; v = *adj[i].begin();
+            adj[i].erase(v); vis[u] = vis[v] = 1;
+            break;
+        }
+    }
+
+    if(u){
+        for(ll i = 1; i <= n; i++) {
+            if (vis[i]) continue;
+            if (adj[i].empty()) ans.push_back({u, v, i}),vis[i] = 1, v = i;
+            else {
+                ll p = *adj[i].begin();
+                vis[i] = vis[p] = 1;
+                ans.push_back({u, i, p});
             }
         }
     }
 
-    cout << "! ";
-    for(ll i=1;i<n;i++)cout << res[i] << " ";
-    cout << endl;
+    cout << ans.size() << nl;
+    for (auto& r : ans) cout << get<0>(r) << " " << get<1>(r) << " " << get<2>(r) << nl;
 }
 
 int main(int argc, char const *argv[]) {
